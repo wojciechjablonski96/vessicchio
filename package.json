@@ -1,0 +1,15 @@
+{
+  "name": "vessicchio",
+  "version": "1.0.0",
+  "description": "A completely free music bot",
+  "main": "index.js",
+  "repository": "https://github.com/wojciechjablonski96/vessicchio.git",
+  "author": "Wojciech Jablonski <info@wojciechjablonski.com>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.3.1",
+    "dotenv": "^8.2.0",
+    "knex": "^0.21.6",
+    "mysql2": "^2.2.5"
+  }
+}
