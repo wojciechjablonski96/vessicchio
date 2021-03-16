@@ -5,10 +5,10 @@ class Guild {
         this.guild = guild;
     }
 
-    getGuild() {
+    async getGuild() {
         let that = this;
-        return new Promise(function (resolve, reject) {
-            database('guilds')
+        return new Promise(async function (resolve, reject) {
+            await database('guilds')
                 .where({id: that.guild.id})
                 .then(rows => {
                     return resolve(rows[0]);
@@ -16,11 +16,18 @@ class Guild {
         });
     }
 
-    newGuild() {
-        database('guilds').insert({
+    async newGuild() {
+        let admins = Array();
+        await this.guild.roles.cache.forEach(role => {
+            if (role.permissions.has('ADMINISTRATOR')) {
+                admins.push(role.id);
+            }
+        });
+
+        await database('guilds').insert({
             id: this.guild.id,
             owner: this.guild.ownerID,
-            administrators: JSON.stringify(Array()),
+            administrators: JSON.stringify(admins),
             users: JSON.stringify(Array()),
             locale: this.guild.preferredLocale,
             prefix: '!',
@@ -29,8 +36,8 @@ class Guild {
         });
     }
 
-    deleteGuild() {
-        database('guilds').where({id: this.guild.id}).del()
+    async deleteGuild() {
+        await database('guilds').where({id: this.guild.id}).del()
             .catch(e => {
                 console.log(e);
             })

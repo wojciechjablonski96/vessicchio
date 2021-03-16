@@ -13,17 +13,17 @@ class Command {
         this.client = client;
     }
 
-    runCommand(message) {
-        new Guild(message.guild).getGuild().then(guild => {
+    async runCommand(message) {
+        await new Guild(message.guild).getGuild().then(async guild => {
             if (guild) {
-                this.#isCommand(message, guild.prefix).then(isCommand => {
+                await this.#isCommand(message, guild.prefix).then(async isCommand => {
                     if (isCommand) {
-                        this.#existCommand(message.content, guild.prefix).then(command => {
+                        await this.#existCommand(message.content, guild.prefix).then(async command => {
                             if (command) {
-                                this.#checkPermission(command.permission, message.member, guild).then(authorized => {
+                                await this.#checkPermission(command.permission, message.member, guild).then(async authorized => {
                                     if (authorized) {
                                         if (command.hasargs === true && command.args.length > 0 || command.hasargs === false) {
-                                            command.foundcmd.use(this.client, command.args, message);
+                                            await command.foundcmd.use(this.client, command.args, message);
                                         } else {
                                             console.log('NO ARGS');
                                         }
@@ -43,7 +43,7 @@ class Command {
         });
     }
 
-    #checkPermission(permission, member, guild) {
+    async #checkPermission(permission, member, guild) {
         return new Promise(async function (resolve) {
             switch (permission) {
                 case 3:
@@ -63,7 +63,7 @@ class Command {
         });
     }
 
-    #existCommand(cmd, prefix) {
+    async #existCommand(cmd, prefix) {
         return new Promise(function (resolve, reject) {
             const args = cmd.slice(prefix.length).trim().split(/ +/g);
 
@@ -84,7 +84,7 @@ class Command {
         });
     }
 
-    #isCommand(message, prefix) {
+    async #isCommand(message, prefix) {
         return new Promise(function (resolve) {
             if (message.content.indexOf(prefix)) return resolve(false);
             else return resolve(true);
