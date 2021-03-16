@@ -1,0 +1,10 @@
+{
+  "commands": [
+    {
+      "id": "help",
+      "cmd": "help",
+      "permission": 1,
+      "args": false
+    }
+  ]
+}
