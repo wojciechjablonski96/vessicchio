@@ -29,18 +29,18 @@ class Command {
                                                 } else {
                                                     await message.delete();
                                                     return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
-                                                        .createError('<@' + message.author.id + '>' + ', this command needs args! You can use !help for more info.');
+                                                        .createError('This command needs args! You can use !help for more info.');
                                                 }
                                             } else {
                                                 await message.delete();
                                                 return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
-                                                    .createError('<@' + message.author.id + '>' + ', you do not have permission to use that command!');
+                                                    .createError('You do not have permission to use this command!');
                                             }
                                         });
                                     } else {
                                         await message.delete();
                                         return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
-                                            .createError('<@' + message.author.id + '>' + ', this command is not avaiable on your discord server! \n Please contact our support!');
+                                            .createError( 'This command is not avaiable on your discord server! \n Please contact our support!');
 
                                     }
                                 });
