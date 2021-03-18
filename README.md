@@ -17,7 +17,7 @@ node app.js
 
 ## MODULES
 
-- ###Music
+- ### Music
   Music module works like a simple music bot. 
   - !play / !p
   - !pause /!ps
@@ -26,11 +26,11 @@ node app.js
   - !skip / !sk
   - !next / !n
   - !disconnect / !leave
-- ###Personal channels
+- ### Personal channels
   //TODO
-- ###Tickets Managment
+- ### Tickets Managment
   //TODO
-- ###Ranking System
+- ### Ranking System
   //TODO
 ## Author
 
