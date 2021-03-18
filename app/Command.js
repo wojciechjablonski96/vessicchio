@@ -20,19 +20,28 @@ class Command {
                     if (isCommand) {
                         await this.#existCommand(message.content, guild.prefix).then(async command => {
                             if (command) {
-                                await this.#checkPermission(command.permission, message.member, guild).then(async authorized => {
-                                    if (authorized) {
-                                        if (command.hasargs === true && command.args.length > 0 || command.hasargs === false) {
-                                            await command.foundcmd.use(this.client, command.args, message);
-                                        } else {
-                                            message.delete();
-                                            return new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
-                                                .createError('<@'+message.author.id +'>'+ ', this command needs args! You can use !help for more info.');
-                                        }
+                                await this.#checkModule(command.cmdprops, guild.modules).then(async avaiable => {
+                                    if (avaiable) {
+                                        await this.#checkPermission(command.cmdprops.permission, message.member, guild).then(async authorized => {
+                                            if (authorized) {
+                                                if (command.cmdprops.args === true && command.args.length > 0 || command.cmdprops.args === false) {
+                                                    await command.cmd.use(this.client, command.args, message);
+                                                } else {
+                                                    await message.delete();
+                                                    return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
+                                                        .createError('<@' + message.author.id + '>' + ', this command needs args! You can use !help for more info.');
+                                                }
+                                            } else {
+                                                await message.delete();
+                                                return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
+                                                    .createError('<@' + message.author.id + '>' + ', you do not have permission to use that command!');
+                                            }
+                                        });
                                     } else {
-                                        message.delete();
-                                        return new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
-                                            .createError('<@'+message.author.id +'>' + ', you do not have permission to use that command!');
+                                        await message.delete();
+                                        return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
+                                            .createError('<@' + message.author.id + '>' + ', this command is not avaiable on your discord server! \n Please contact our support!');
+
                                     }
                                 });
                             }
@@ -74,18 +83,19 @@ class Command {
             const command = args.shift().toLowerCase();
 
             try {
-                let foundcmd = require(`../commands/${
+                let cmd = require(`../commands/${
                     config.commands.find(arrcommand => arrcommand.cmd === command).id}.js`);
 
-                let permission = config.commands.find(arrcommand => arrcommand.cmd === command).permission;
-
-                let hasargs = config.commands.find(arrcommand => arrcommand.cmd === command).args;
-
-                return resolve({foundcmd, args, permission, hasargs});
+                let cmdprops = config.commands.find(arrcommand => arrcommand.cmd === command);
+                return resolve({cmd, cmdprops, args});
             } catch (e) {
                 return reject(e);
             }
         });
+    }
+
+    async #checkModule(cmd, modules) {
+        return JSON.parse(modules).includes(cmd.module);
     }
 
     async #isCommand(message, prefix) {

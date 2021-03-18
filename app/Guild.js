@@ -34,6 +34,7 @@ class Guild {
             owner: this.guild.ownerID,
             administrators: JSON.stringify(admins),
             users: JSON.stringify(Array()),
+            modules: JSON.stringify(Array('main')),
             locale: this.guild.preferredLocale,
             prefix: '!',
         }).catch(e => {
