@@ -1,12 +1,12 @@
+/* Copyright (C) Wojciech Jablonski - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Wojciech Jablonski <info@wojciechjablonski.com>, 2021
+ */
 const config = require('../inc/config.json');
 const database = require('../inc/db');
 const Guild = require('./Guild');
-
-/*
-1) User
-2) Administrator
-3) Discord Owner
-*/
+const Message = require('./Message');
 
 class Command {
     constructor(client) {
@@ -25,10 +25,14 @@ class Command {
                                         if (command.hasargs === true && command.args.length > 0 || command.hasargs === false) {
                                             await command.foundcmd.use(this.client, command.args, message);
                                         } else {
-                                            console.log('NO ARGS');
+                                            message.delete();
+                                            return new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
+                                                .createError('<@'+message.author.id +'>'+ ', this command needs args! You can use !help for more info.');
                                         }
                                     } else {
-                                        console.log('NO PERMISSION');
+                                        message.delete();
+                                        return new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
+                                            .createError('<@'+message.author.id +'>' + ', you do not have permission to use that command!');
                                     }
                                 });
                             }
