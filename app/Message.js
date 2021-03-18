@@ -5,6 +5,7 @@
  */
 
 const Discord = require('discord.js');
+const Moment = require('moment');
 
 class Message {
     constructor(entity, autodelete = 0) {
@@ -21,11 +22,10 @@ class Message {
         return this.entity.send(
             new Discord.MessageEmbed()
                 .setColor(process.env.COLOR_ERROR)
-                .setDescription(errorMessage)
-                .setTitle('ERROR')
+                .setTitle(errorMessage)
                 .setAuthor(process.env.NAME)
                 .setThumbnail(process.env.LOGO)
-                .setFooter(process.env.COPY.toString())
+                .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | '+ process.env.VERSION.toString())
                 .setTimestamp()
         ).then(message => {
             if (this.autodelete)
