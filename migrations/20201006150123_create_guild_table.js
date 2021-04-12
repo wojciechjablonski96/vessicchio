@@ -11,6 +11,7 @@ exports.up = function (knex) {
         table.text('administrators').nullable()
         table.text('users').nullable()
         table.text('modules').nullable()
+        table.text('channels').nullable()
         table.string('locale').nullable()
         table.string('prefix').nullable()
         table.timestamp('timestamp').defaultTo(knex.fn.now())
