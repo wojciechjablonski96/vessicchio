@@ -1,7 +1,7 @@
 /* Copyright (C) Wojciech Jablonski - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
- * Written by Wojciech Jablonski <info@wojciechjablonski.com>, 2021
+ * Written by Wojciech Jablonski <info@wojciechjablonski.com>, April 2021
  */
 const config = require('../inc/config.json');
 const database = require('../inc/db');
@@ -24,13 +24,19 @@ class Command {
                                     if (avaiable) {
                                         await this.#checkPermission(command.cmdprops.permission, message.member, guild).then(async authorized => {
                                             if (authorized) {
-                                                if (command.cmdprops.args === true && command.args.length > 0 || command.cmdprops.args === false) {
-                                                    await command.cmd.use(this.client, command.args, message);
-                                                } else {
-                                                    await message.delete();
-                                                    return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
-                                                        .createError('This command needs args! You can use !help for more info.');
-                                                }
+                                                await this.#checkTrueChannel(command.cmdprops.module, message).then(async truechannel => {
+                                                    if (truechannel) {
+                                                        if (command.cmdprops.args === true && command.args.length > 0 || command.cmdprops.args === false) {
+                                                            await command.cmd.use(this.client, command.args, message);
+                                                        } else {
+                                                            await message.delete();
+                                                            return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
+                                                                .createError('This command needs args! You can use !help for more info.');
+                                                        }
+                                                    } else {
+                                                        //Nothing wrong channel error
+                                                    }
+                                                });
                                             } else {
                                                 await message.delete();
                                                 return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
@@ -40,7 +46,7 @@ class Command {
                                     } else {
                                         await message.delete();
                                         return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
-                                            .createError( 'This command is not avaiable on your discord server! \n Please contact our support!');
+                                            .createError('This command is not available on your discord server! \n Please contact our support!');
 
                                     }
                                 });
@@ -53,6 +59,21 @@ class Command {
                     }
                 });
             }
+        });
+    }
+
+    async #checkTrueChannel(module, message) {
+        return new Promise(async function (resolve) {
+            await new Guild(message.guild).getGuild().then(async guild => {
+                let channels = JSON.parse(guild.channels);
+                if (!channels.hasOwnProperty(module)) {
+                    return resolve(true);
+                } else {
+                    if (channels[module].includes(message.channel.id))
+                        return resolve(true);
+                    else return resolve(false);
+                }
+            });
         });
     }
 
