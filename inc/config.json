@@ -4,7 +4,29 @@
       "id": "help",
       "cmd": "help",
       "permission": 1,
-      "args": false
+      "args": false,
+      "module": "main"
+    },
+    {
+      "id": "options",
+      "cmd": "options",
+      "permission": 3,
+      "args": true,
+      "module": "main"
+    },
+    {
+      "id": "play",
+      "cmd": "play",
+      "permission": 1,
+      "args": true,
+      "module": "music"
+    },
+    {
+      "id": "stop",
+      "cmd": "stop",
+      "permission": 1,
+      "args": false,
+      "module": "music"
     }
   ]
 }
