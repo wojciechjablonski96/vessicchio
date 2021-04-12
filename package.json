@@ -7,8 +7,12 @@
   "author": "Wojciech Jablonski <info@wojciechjablonski.com>",
   "license": "MIT",
   "dependencies": {
+    "@discordjs/opus": "discordjs/opus",
+    "discord-player": "^3.4.0",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
+    "ffmpeg-static": "^4.3.0",
+    "fs": "^0.0.1-security",
     "knex": "^0.21.6",
     "moment": "^2.29.1",
     "mysql2": "^2.2.5"
