@@ -12,6 +12,7 @@ DiscordClient.player = new Player(DiscordClient,{
     leaveOnEmpty:true,
     leaveOnStop:false,
     leaveOnEnd:false,
+    autoSelfDeaf: false,
     leaveOnEndCooldown: 180000
 });
 
