@@ -3,11 +3,7 @@
  * Proprietary and confidential
  * Written by Wojciech Jablonski <info@wojciechjablonski.com>, 2021
  */
-
-const Guild = require('../app/Guild');
-
-exports.use = async (DiscordClient) => {
-    DiscordClient.on('guildCreate', (guild) => {
-        new Guild(guild).newGuild();
-    });
+const Music = require('../app/Music');
+exports.use = async (client, args, message) => {
+    await new Music(client, message).skip();
 }

@@ -1,34 +1,52 @@
+/* Copyright (C) Wojciech Jablonski - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Wojciech Jablonski <info@wojciechjablonski.com>, April 2021
+ */
 const config = require('../inc/config.json');
-const database = require('../inc/db');
 const Guild = require('./Guild');
-
-/*
-1) User
-2) Administrator
-3) Discord Owner
-*/
+const Message = require('./Message');
 
 class Command {
     constructor(client) {
         this.client = client;
     }
 
-    runCommand(message) {
-        new Guild(message.guild).getGuild().then(guild => {
+    async runCommand(message) {
+        await new Guild(message.guild).getGuild().then(async guild => {
             if (guild) {
-                this.#isCommand(message, guild.prefix).then(isCommand => {
+                await this.#isCommand(message, guild.prefix).then(async isCommand => {
                     if (isCommand) {
-                        this.#existCommand(message.content, guild.prefix).then(command => {
+                        await this.#existCommand(message.content, guild.prefix).then(async command => {
                             if (command) {
-                                this.#checkPermission(command.permission, message.member, guild).then(authorized => {
-                                    if (authorized) {
-                                        if (command.hasargs === true && command.args.length > 0 || command.hasargs === false) {
-                                            command.foundcmd.use(this.client, command.args, message);
-                                        } else {
-                                            console.log('NO ARGS');
-                                        }
+                                await this.#checkModule(command.cmdprops, guild.modules).then(async avaiable => {
+                                    if (avaiable) {
+                                        await this.#checkPermission(command.cmdprops.permission, message.member, guild).then(async authorized => {
+                                            if (authorized) {
+                                                await this.#checkTrueChannel(command.cmdprops.module, message).then(async truechannel => {
+                                                    if (truechannel) {
+                                                        if (command.cmdprops.args === true && command.args.length > 0 || command.cmdprops.args === false) {
+                                                            await command.cmd.use(this.client, command.args, message);
+                                                        } else {
+                                                            await message.delete();
+                                                            return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
+                                                                .createError('This command needs args! You can use !help for more info.');
+                                                        }
+                                                    } else {
+                                                        //Nothing wrong channel error
+                                                    }
+                                                });
+                                            } else {
+                                                await message.delete();
+                                                return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
+                                                    .createError('You do not have permission to use this command!');
+                                            }
+                                        });
                                     } else {
-                                        console.log('NO PERMISSION');
+                                        await message.delete();
+                                        return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
+                                            .createError('This command is not available on your discord server! \n Please contact our support!');
+
                                     }
                                 });
                             }
@@ -43,7 +61,22 @@ class Command {
         });
     }
 
-    #checkPermission(permission, member, guild) {
+    async #checkTrueChannel(module, message) {
+        return new Promise(async function (resolve) {
+            await new Guild(message.guild).getGuild().then(async guild => {
+                let channels = JSON.parse(guild.channels);
+                if (!channels.hasOwnProperty(module)) {
+                    return resolve(true);
+                } else {
+                    if (channels[module].includes(message.channel.id))
+                        return resolve(true);
+                    else return resolve(false);
+                }
+            });
+        });
+    }
+
+    async #checkPermission(permission, member, guild) {
         return new Promise(async function (resolve) {
             switch (permission) {
                 case 3:
@@ -63,28 +96,29 @@ class Command {
         });
     }
 
-    #existCommand(cmd, prefix) {
+    async #existCommand(cmd, prefix) {
         return new Promise(function (resolve, reject) {
             const args = cmd.slice(prefix.length).trim().split(/ +/g);
 
             const command = args.shift().toLowerCase();
 
             try {
-                let foundcmd = require(`../commands/${
+                let cmd = require(`../commands/${
                     config.commands.find(arrcommand => arrcommand.cmd === command).id}.js`);
 
-                let permission = config.commands.find(arrcommand => arrcommand.cmd === command).permission;
-
-                let hasargs = config.commands.find(arrcommand => arrcommand.cmd === command).args;
-
-                return resolve({foundcmd, args, permission, hasargs});
+                let cmdprops = config.commands.find(arrcommand => arrcommand.cmd === command);
+                return resolve({cmd, cmdprops, args});
             } catch (e) {
                 return reject(e);
             }
         });
     }
 
-    #isCommand(message, prefix) {
+    async #checkModule(cmd, modules) {
+        return JSON.parse(modules).includes(cmd.module);
+    }
+
+    async #isCommand(message, prefix) {
         return new Promise(function (resolve) {
             if (message.content.indexOf(prefix)) return resolve(false);
             else return resolve(true);
