@@ -1,3 +1,5 @@
+const Message = require('../../app/Message');
+
 module.exports = (client, message, track) => {
-    message.channel.send(`Now playing ${track.title} into ${message.member.voice.channel.name} ...`);
+    return new Message(message.channel).createSong(track,client,0);
 };

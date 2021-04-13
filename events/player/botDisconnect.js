@@ -1,3 +1,6 @@
+const Message = require('../../app/Message');
+
 module.exports = (client, message, queue) => {
-    message.channel.send(`Music stopped as i have been disconnected from the channel !`);
+    return new Message(message.channel)
+        .createInfo('Bot disconnected from the channel');
 };

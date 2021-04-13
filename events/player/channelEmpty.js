@@ -1,3 +1,5 @@
+const Message = require('../../app/Message');
+
 module.exports = (client, message, queue) => {
-    message.channel.send(`Music stopped as there is no more member in the voice channel !`);
+    return new Message(message.channel).createInfo('The channel is empty, stopped music.');
 };

@@ -1,21 +1,24 @@
+const Message = require('../../app/Message');
+
 module.exports = (client, error, message, ...args) => {
     switch (error) {
         case 'NotPlaying':
-            message.channel.send(`${client.emotes.error} - There is no music being played on this server !`);
-            break;
+            return new Message(message.channel)
+                .createError('Currently, the bot is not playing anything!');
         case 'NotConnected':
-            message.channel.send(`${client.emotes.error} - You are not connected in any voice channel !`);
-            break;
+            return new Message(message.channel)
+                .createError('You are not connected in a voice channel!');
         case 'UnableToJoin':
-            message.channel.send(`${client.emotes.error} - I am not able to join your voice channel, please check my permissions !`);
-            break;
+            return new Message(message.channel)
+                .createError('The bot is unable to join your channel, check permissions!');
         case 'VideoUnavailable':
-            message.channel.send(`${client.emotes.error} - ${args[0].title} is not available in your country! Skipping...`);
-            break;
+            return new Message(message.channel)
+                .createError(`${args[0].title} is not available in your country!`);
         case 'MusicStarting':
-            message.channel.send(`The music is starting... please wait and retry!`);
-            break;
+            return new Message(message.channel)
+                .createError('Bot is starting, please wait!');
         default:
-            message.channel.send(`${client.emotes.error} - Something went wrong ... Error : ${error}`);
-    };
+            return new Message(message.channel)
+                .createError(`Something went wrong. ERROR: ${error}`);
+    }
 };

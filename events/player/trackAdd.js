@@ -1,3 +1,5 @@
+const Message = require('../../app/Message');
+
 module.exports = (client, message, queue, track) => {
-    message.channel.send(`${track.title} has been added to the queue !`);
+    return new Message(message.channel).createSong(track,client,1);
 };
