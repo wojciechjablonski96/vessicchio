@@ -1,3 +1,5 @@
+const Message = require('../../app/Message');
+
 module.exports = (client, message, query) => {
-    message.channel.send(`No results found on YouTube for ${query} !`);
+    return new Message(message.channel).createInfo(`No results found on YouTube for ${query} !`)
 };
