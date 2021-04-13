@@ -4,7 +4,6 @@
  * Written by Wojciech Jablonski <info@wojciechjablonski.com>, April 2021
  */
 const config = require('../inc/config.json');
-const database = require('../inc/db');
 const Guild = require('./Guild');
 const Message = require('./Message');
 
