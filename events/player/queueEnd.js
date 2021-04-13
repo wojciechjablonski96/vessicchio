@@ -1,3 +1,6 @@
+const Message = require('../../app/Message');
+
 module.exports = (client, message, queue) => {
-    message.channel.send(`Music stopped as there is no more music in the queue !`);
+    return new Message(message.channel)
+        .createInfo("There are no other songs in the queue!");
 };
