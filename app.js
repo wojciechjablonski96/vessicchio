@@ -8,7 +8,12 @@ const fs = require('fs');
 
 //Creating discord client
 const DiscordClient = new Discord.Client();
-DiscordClient.player = new Player(DiscordClient);
+DiscordClient.player = new Player(DiscordClient,{
+    leaveOnEmpty:true,
+    leaveOnStop:false,
+    leaveOnEnd:false,
+    leaveOnEndCooldown: 180000
+});
 
 
 const events = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
