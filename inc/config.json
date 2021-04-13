@@ -27,6 +27,13 @@
       "permission": 1,
       "args": false,
       "module": "music"
+    },
+    {
+      "id": "skip",
+      "cmd": "skip",
+      "permission": 1,
+      "args": false,
+      "module": "music"
     }
   ]
 }
