@@ -3,6 +3,9 @@
     {
       "id": "help",
       "cmd": "help",
+      "aliases": [
+        "h"
+      ],
       "permission": 1,
       "args": false,
       "module": "main"
@@ -10,6 +13,10 @@
     {
       "id": "options",
       "cmd": "options",
+      "aliases": [
+        "settings",
+        "op"
+      ],
       "permission": 3,
       "args": true,
       "module": "main"
@@ -17,6 +24,9 @@
     {
       "id": "play",
       "cmd": "play",
+      "aliases": [
+        "p"
+      ],
       "permission": 1,
       "args": true,
       "module": "music"
@@ -24,6 +34,9 @@
     {
       "id": "stop",
       "cmd": "stop",
+      "aliases": [
+        "st"
+      ],
       "permission": 1,
       "args": false,
       "module": "music"
@@ -31,6 +44,20 @@
     {
       "id": "skip",
       "cmd": "skip",
+      "aliases": [
+        "next",
+        "sk"
+      ],
+      "permission": 1,
+      "args": false,
+      "module": "music"
+    },
+    {
+      "id": "leave",
+      "cmd": "leave",
+      "aliases": [
+        "lv"
+      ],
       "permission": 1,
       "args": false,
       "module": "music"
