@@ -48,7 +48,7 @@ class Music {
                     if (inSameVoice) {
                         this.#isPlaying(this.message).then(async isPlaying => {
                             if (isPlaying) {
-                                if(this.client.player.skip(this.message)) return await new Message(this.message.channel).createInfo('The current song has been skipped.');
+                                if (this.client.player.skip(this.message)) return await new Message(this.message.channel).createInfo('The current song has been skipped.');
                             } else return await new Message(this.message.channel).createError('This bot is not playing now.');
                         });
                     } else return new Message(this.message.channel).createError('You are not in the same voice channel.');
@@ -57,6 +57,25 @@ class Music {
         });
     }
 
+    async leave() {
+        await this.#isVoiceChannel(this.message).then(async inVoice => {
+            if (inVoice) {
+                await this.#isSameVoiceChannel(this.message).then(async inSameVoice => {
+                    if (inSameVoice) {
+                        this.#isPlaying(this.message).then(async isPlaying => {
+                            if (isPlaying) {
+                                await this.client.player.setRepeatMode(this.message, false);
+                                await this.client.player.stop(this.message);
+                            }
+                        });
+                        if (this.message.guild.me.voice.channel) await this.message.guild.me.voice.kick().then(() => {
+                            return new Message(this.message.channel).createInfo('Leaving');
+                        });
+                    } else return new Message(this.message.channel).createError('You are not in the same voice channel.');
+                });
+            } else return new Message(this.message.channel).createError('You are not in a voice channel.');
+        });
+    }
 
     async #isVoiceChannel() {
         let that = this;
