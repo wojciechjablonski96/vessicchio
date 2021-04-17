@@ -61,6 +61,26 @@
       "permission": 1,
       "args": false,
       "module": "music"
+    },
+    {
+      "id": "pause",
+      "cmd": "pause",
+      "aliases": [
+        "ps"
+      ],
+      "permission": 1,
+      "args": false,
+      "module": "music"
+    },
+    {
+      "id": "resume",
+      "cmd": "resume",
+      "aliases": [
+        "rs"
+      ],
+      "permission": 1,
+      "args": false,
+      "module": "music"
     }
   ]
 }
