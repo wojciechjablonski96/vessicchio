@@ -62,7 +62,7 @@ class Music {
             if (inVoice) {
                 await this.#isSameVoiceChannel(this.message).then(async inSameVoice => {
                     if (inSameVoice) {
-                        this.#isPlaying(this.message).then(async isPlaying => {
+                        await this.#isPlaying(this.message).then(async isPlaying => {
                             if (isPlaying) {
                                 await this.client.player.setRepeatMode(this.message, false);
                                 await this.client.player.stop(this.message);
@@ -74,6 +74,58 @@ class Music {
                     } else return new Message(this.message.channel).createError('You are not in the same voice channel.');
                 });
             } else return new Message(this.message.channel).createError('You are not in a voice channel.');
+        });
+    }
+
+    async pause() {
+        await this.#isVoiceChannel(this.message).then(async inVoice => {
+            if (inVoice) {
+                await this.#isSameVoiceChannel(this.message).then(async inSameVoice => {
+                    if (inSameVoice) {
+                        await this.#isPlaying(this.message).then(async isPlaying => {
+                            if (isPlaying) {
+                                await this.#isPaused().then(async Paused => {
+                                    if (!Paused) {
+                                        if (this.client.player.pause(this.message)) return new Message(this.message.channel).createInfo('Bot Paused');
+                                    } else {
+                                        return new Message(this.message.channel).createError('Already Paused');
+                                    }
+                                });
+                            } else return await new Message(this.message.channel).createError('This bot is not playing now.');
+                        });
+                    } else return new Message(this.message.channel).createError('You are not in the same voice channel.');
+                });
+            } else return new Message(this.message.channel).createError('You are not in a voice channel.');
+        });
+    }
+
+    async resume() {
+        await this.#isVoiceChannel(this.message).then(async inVoice => {
+            if (inVoice) {
+                await this.#isSameVoiceChannel(this.message).then(async inSameVoice => {
+                    if (inSameVoice) {
+                        await this.#isPlaying(this.message).then(async isPlaying => {
+                            if (isPlaying) {
+                                await this.#isPaused().then(async Paused => {
+                                    if (Paused) {
+                                        if (this.client.player.resume(this.message)) return new Message(this.message.channel).createInfo('Bot has been resumed!');
+                                    } else {
+                                        return new Message(this.message.channel).createError('Bot is not Paused');
+                                    }
+                                });
+                            } else return await new Message(this.message.channel).createError('This bot is not playing now.');
+                        });
+                    } else return new Message(this.message.channel).createError('You are not in the same voice channel.');
+                });
+            } else return new Message(this.message.channel).createError('You are not in a voice channel.');
+        });
+    }
+
+    async #isPaused() {
+        let that = this;
+        return new Promise(async function (resolve) {
+            if (that.client.player.getQueue(that.message).paused) return resolve(true);
+            else return resolve(false);
         });
     }
 
