@@ -76,7 +76,7 @@
       "id": "resume",
       "cmd": "resume",
       "aliases": [
-        "rs"
+        "rs "
       ],
       "permission": 1,
       "args": false,
