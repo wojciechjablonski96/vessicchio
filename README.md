@@ -24,8 +24,7 @@ node app.js
   - !resume / !rs
   - !stop / !s
   - !skip / !sk
-  - !next / !n
-  - !disconnect / !leave
+  - !leave / !lv
 - ### Personal channels
   //TODO
 - ### Tickets Managment
