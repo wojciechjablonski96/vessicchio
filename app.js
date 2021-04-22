@@ -16,7 +16,7 @@ const fs = require('fs');
 const DiscordClient = new Discord.Client();
 DiscordClient.player = new Player(DiscordClient,{
     leaveOnEmpty:true,
-    leaveOnStop:false,
+    leaveOnStop:true,
     leaveOnEnd:true,
     autoSelfDeaf: false,
     leaveOnEndCooldown: 300000
