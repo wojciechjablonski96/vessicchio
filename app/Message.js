@@ -66,19 +66,22 @@ class Message {
             .setDescription(song.title)
             .setAuthor(process.env.NAME)
             .setThumbnail(process.env.LOGO)
-            .setImage(song.thumbnail)
-            .addFields([
+            .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | ' + process.env.VERSION.toString())
+            .setTimestamp();
+
+        if (type === 1) {
+            msg.setTitle('Added to queue');
+        } else {
+            msg.setTitle('Now playing');
+            msg.setImage(song.thumbnail);
+            msg.addFields([
                 {name: 'Channel', value: song.author, inline: true},
                 {name: 'Requested by', value: song.requestedBy.username, inline: true},
 
                 {name: 'Views', value: song.views, inline: true},
                 {name: 'Duration', value: song.duration, inline: true},
-            ])
-            .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | ' + process.env.VERSION.toString())
-            .setTimestamp();
-
-        if(type === 1) msg.setTitle('Added to queue')
-        else msg.setTitle('Now playing')
+            ]);
+        }
 
         return this.entity.send(msg).then(message => {
             if (this.autodelete)
