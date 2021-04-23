@@ -24,7 +24,7 @@ class Message {
             .setTitle('Vessicchio HELP')
             .setURL('https://vessicchio.termi.gg')
             .setAuthor(process.env.NAME)
-            .setThumbnail(process.env.logo)
+            .setThumbnail(process.env.LOGO)
             .addFields(commands)
             .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | ' + process.env.VERSION.toString())
             .setTimestamp();
