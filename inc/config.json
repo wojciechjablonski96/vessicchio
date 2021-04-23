@@ -17,7 +17,7 @@
         "settings",
         "op"
       ],
-      "permission": 3,
+      "permission": 2,
       "args": true,
       "module": "main"
     },
