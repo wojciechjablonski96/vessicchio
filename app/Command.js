@@ -85,7 +85,6 @@ class Command {
                 case 2:
                     if (member.id === guild.owner) return resolve(true);
                     else if (member.roles.cache.some(r => JSON.parse(guild.administrators).includes(r.id))) return resolve(true);
-                    else if (member.roles.cache.some(r => JSON.parse(guild.users).includes(r.id))) return resolve(false);
                     else return resolve(false);
                 case 1:
                     if (member.id === guild.owner) return resolve(true);
