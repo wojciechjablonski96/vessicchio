@@ -2,7 +2,8 @@
   "commands": [
     {
       "id": "help",
-      "cmd": "help",
+      "cmd": "vessicchio",
+      "description": "Hello World, i can help you!",
       "aliases": [
         "h"
       ],
@@ -13,6 +14,7 @@
     {
       "id": "options",
       "cmd": "options",
+      "description": "Configuration command, for more info use !options help",
       "aliases": [
         "settings",
         "op"
@@ -24,6 +26,7 @@
     {
       "id": "play",
       "cmd": "play",
+      "description": "Yes, you can play songs with this command! Use !play title/youtube link",
       "aliases": [
         "p"
       ],
@@ -34,6 +37,7 @@
     {
       "id": "stop",
       "cmd": "stop",
+      "description": "Okay, this command stops music and kick me from your channel!",
       "aliases": [
         "st"
       ],
@@ -44,6 +48,7 @@
     {
       "id": "skip",
       "cmd": "skip",
+      "description": "If your friend's song is a shit you can skip it!",
       "aliases": [
         "next",
         "sk"
@@ -55,6 +60,7 @@
     {
       "id": "leave",
       "cmd": "leave",
+      "description": "You can kick me from your channel!",
       "aliases": [
         "lv"
       ],
@@ -65,6 +71,7 @@
     {
       "id": "pause",
       "cmd": "pause",
+      "description": "Pauses your music!",
       "aliases": [
         "ps"
       ],
@@ -75,6 +82,7 @@
     {
       "id": "resume",
       "cmd": "resume",
+      "description": "Resumes your paused music!",
       "aliases": [
         "rs "
       ],
