@@ -18,6 +18,25 @@ class Message {
             this.autodelete = false;
     }
 
+    async createHelp(commands) {
+        let msg = new Discord.MessageEmbed()
+            .setColor(process.env.COLOR_INFO)
+            .setTitle('Vessicchio HELP')
+            .setURL('https://vessicchio.termi.gg')
+            .setAuthor(process.env.NAME)
+            .setThumbnail(process.env.logo)
+            .addFields(commands)
+            .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | ' + process.env.VERSION.toString())
+            .setTimestamp();
+        return this.entity.send(msg).then(message => {
+            if (this.autodelete)
+                var timeout = setTimeout(function () {
+                    message.delete();
+                    clearTimeout(timeout);
+                }, this.autodelete);
+        });
+    }
+
     createError(errorMessage, details = null) {
 
         let msg = new Discord.MessageEmbed()
@@ -62,7 +81,6 @@ class Message {
 
     createSong(song, client, type) {
         let msg = new Discord.MessageEmbed()
-            .setColor(process.env.COLOR_PRIMARY)
             .setDescription(song.title)
             .setAuthor(process.env.NAME)
             .setThumbnail(process.env.LOGO)
@@ -71,12 +89,14 @@ class Message {
 
         if (type === 1) {
             msg.setTitle('Added to queue');
+            msg.setColor(process.env.COLOR_SUCCESS);
             msg.addFields([
                 {name: 'Requested by', value: song.requestedBy.username, inline: false},
             ]);
         } else {
             msg.setTitle('Now playing');
             msg.setImage(song.thumbnail);
+            msg.setColor(process.env.COLOR_PRIMARY);
             msg.addFields([
                 {name: 'Channel', value: song.author, inline: true},
                 {name: 'Requested by', value: song.requestedBy.username, inline: true},
