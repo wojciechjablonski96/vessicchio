@@ -71,6 +71,9 @@ class Message {
 
         if (type === 1) {
             msg.setTitle('Added to queue');
+            msg.addFields([
+                {name: 'Requested by', value: song.requestedBy.username, inline: false},
+            ]);
         } else {
             msg.setTitle('Now playing');
             msg.setImage(song.thumbnail);

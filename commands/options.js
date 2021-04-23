@@ -61,8 +61,11 @@ exports.use = async (client, args, message) => {
                     await message.delete();
                     return await new Guild(message.channel.guild)
                         .viewGroup('administrator', message);
+                default:
+                    await message.delete();
+                    return await new Message(message.channel,10)
+                        .createError('You have to choose between add, remove or list!');
             }
-            break;
         case 'user':
             switch (args[1]) {
                 case 'add':
@@ -111,8 +114,11 @@ exports.use = async (client, args, message) => {
                     await message.delete();
                     return await new Guild(message.channel.guild)
                         .viewGroup('user', message);
+                default:
+                    await message.delete();
+                    return await new Message(message.channel,10)
+                        .createError('You have to choose between add, remove or list!');
             }
-            break;
         case 'prefix':
             switch (args[1]) {
                 case 'set':
@@ -163,7 +169,14 @@ exports.use = async (client, args, message) => {
                     await message.delete();
                     return await new Guild(message.channel.guild)
                         .viewMusicChannels(message);
+                default:
+                    await message.delete();
+                    return await new Message(message.channel,10)
+                        .createError('You have to choose between add, remove or list!');
             }
-            break;
+        default:
+            await message.delete();
+            return await new Message(message.channel,10)
+                .createError('You have to choose between admin, user, prefix or music!');
     }
 }
