@@ -37,7 +37,7 @@
     {
       "id": "stop",
       "cmd": "stop",
-      "description": "Okay, this command stops music and kick me from your channel!",
+      "description": "This command stops music and kick me from your channel!",
       "aliases": [
         "st"
       ],
@@ -71,7 +71,7 @@
     {
       "id": "pause",
       "cmd": "pause",
-      "description": "Pauses your music!",
+      "description": "Pause your music!",
       "aliases": [
         "ps"
       ],
@@ -82,7 +82,7 @@
     {
       "id": "resume",
       "cmd": "resume",
-      "description": "Resumes your paused music!",
+      "description": "Resume your paused music!",
       "aliases": [
         "rs "
       ],
