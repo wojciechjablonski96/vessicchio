@@ -83,14 +83,14 @@ class Command {
                     if (member.id === guild.owner) return resolve(true);
                     else return resolve(false);
                 case 2:
+                    if (member.id === guild.owner) return resolve(true);
                     if (member.roles.cache.some(r => JSON.parse(guild.users).includes(r.id))) return resolve(false);
                     if (member.roles.cache.some(r => JSON.parse(guild.administrators).includes(r.id))) return resolve(true);
-                    if (member.id === guild.owner) return resolve(true);
                     else return resolve(false);
                 case 1:
+                    if (member.id === guild.owner) return resolve(true);
                     if (member.roles.cache.some(r => JSON.parse(guild.users).includes(r.id))) return resolve(true);
                     if (member.roles.cache.some(r => JSON.parse(guild.administrators).includes(r.id))) return resolve(true);
-                    if (member.id === guild.owner) return resolve(true);
                     else return resolve(false);
             }
         });
