@@ -121,6 +121,23 @@ class Music {
         });
     }
 
+    async shuffle() {
+        await this.#isVoiceChannel(this.message).then(async inVoice => {
+            if (inVoice) {
+                await this.#isSameVoiceChannel(this.message).then(async inSameVoice => {
+                    if (inSameVoice) {
+                        await this.#isPlaying(this.message).then(async isPlaying => {
+                            if (isPlaying) {
+                                if(this.client.player.shuffle(this.message)) return new Message(this.message.channel)
+                                    .createInfo('Queue shuffled with ' + this.client.player.getQueue(this.message).tracks.length +' songs!');
+                            } else return await new Message(this.message.channel).createError('This bot is not playing now.');
+                        });
+                    } else return new Message(this.message.channel).createError('You are not in the same voice channel.');
+                });
+            } else return new Message(this.message.channel).createError('You are not in a voice channel.');
+        });
+    }
+
     async #isPaused() {
         let that = this;
         return new Promise(async function (resolve) {
