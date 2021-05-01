@@ -11,16 +11,17 @@ exports.use = async (client, args, message) => {
     switch (args[0]) {
         case 'help':
             return new Message(message.channel).createHelp([
+                {name: 'Administrator Role', value: '\u200B'},
                 {name: '!options admin add @group', value: 'Add group to admins', inline:true},
                 {name: '!options admin remove @group', value: 'Remove group from admins', inline:true},
                 {name: '!options admin list', value: 'Show admin list', inline:true},
-                {name: '\u200B', value: '\u200B'},
+                {name: 'User Role', value: '\u200B'},
                 {name: '!options user add @group', value: 'Add group to users', inline:true},
                 {name: '!options user remove @group', value: 'Remove group from users', inline:true},
                 {name: '!options user list', value: 'Show users list', inline:true},
-                {name: '\u200B', value: '\u200B'},
-                {name: '!options music add @TextChannel', value: 'Add text channel to music command list', inline:true},
-                {name: '!options music remove @TextChannel', value: 'Remove text channel from music command list', inline:true},
+                {name: 'Music commands channels', value: '\u200B'},
+                {name: '!options music add #TextChannel', value: 'Add text channel to music command list', inline:true},
+                {name: '!options music remove #TextChannel', value: 'Remove text channel from music command list', inline:true},
                 {name: '!options music list', value: 'Show music text channel list', inline:true},
             ]);
         case 'admin':
