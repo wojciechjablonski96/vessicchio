@@ -84,7 +84,18 @@
       "cmd": "resume",
       "description": "Resume your paused music!",
       "aliases": [
-        "rs "
+        "rs"
+      ],
+      "permission": 1,
+      "args": false,
+      "module": "music"
+    },
+    {
+      "id": "shuffle",
+      "cmd": "shuffle",
+      "description": "Shuffle your queue!",
+      "aliases": [
+        "sf"
       ],
       "permission": 1,
       "args": false,
