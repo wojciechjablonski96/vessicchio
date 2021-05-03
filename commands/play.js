@@ -5,5 +5,6 @@
  */
 const Music = require('../app/Music');
 exports.use = async (client, args, message) => {
-    await new Music(client, message).play(args);
+    await new Music(client, message).play(args).finally(() => {
+    });
 }
