@@ -4,7 +4,19 @@
  * Written by Wojciech Jablonski <info@wojciechjablonski.com>, 2021
  */
 const Music = require('../app/Music');
-exports.use = async (client, args, message) => {
-    await new Music(client, message).play(args).finally(() => {
-    });
+
+module.exports = {
+    cmd: "play",
+    description: "Yes, you can play songs with this command! Use !play title/youtube link",
+    aliases: [
+        "p"
+    ],
+    permission: 1,
+    args: true,
+    module: "music",
+
+    execute(client, message, args) {
+        new Music(client, message).play(args).finally(() => {
+        });
+    }
 }

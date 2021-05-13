@@ -4,7 +4,20 @@
  * Written by Wojciech Jablonski <info@wojciechjablonski.com>, 2021
  */
 const Music = require('../app/Music');
-exports.use = async (client, args, message) => {
-    await new Music(client, message).pause().finally(() => {
-    });
+
+module.exports = {
+    cmd: "pause",
+    description: "Pause your music!",
+    aliases: [
+        "ps"
+    ],
+    permission: 1,
+    args: false,
+    module: "music",
+
+    execute(client, message, args) {
+        new Music(client, message).pause().finally(() => {
+        });
+    }
 }
+

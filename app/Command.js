@@ -3,7 +3,6 @@
  * Proprietary and confidential
  * Written by Wojciech Jablonski <info@wojciechjablonski.com>, April 2021
  */
-const config = require('../inc/config.json');
 const Guild = require('./Guild');
 const Message = require('./Message');
 
@@ -19,14 +18,14 @@ class Command {
                     if (isCommand) {
                         await this.#existCommand(message.content, guild.prefix).then(async command => {
                             if (command) {
-                                await this.#checkModule(command.cmdprops, guild.modules).then(async avaiable => {
+                                await this.#checkModule(command, guild.modules).then(async avaiable => {
                                     if (avaiable) {
-                                        await this.#checkPermission(command.cmdprops.permission, message.member, guild).then(async authorized => {
+                                        await this.#checkPermission(command.permission, message.member, guild).then(async authorized => {
                                             if (authorized) {
-                                                await this.#checkTrueChannel(command.cmdprops.module, message).then(async truechannel => {
+                                                await this.#checkTrueChannel(command.module, message).then(async truechannel => {
                                                     if (truechannel) {
-                                                        if (command.cmdprops.args === true && command.args.length > 0 || command.cmdprops.args === false) {
-                                                            await command.cmd.use(this.client, command.args, message);
+                                                        if (command.args === true && command.arguments.length > 0 || command.args === false) {
+                                                            await command.execute(this.client, message, command.arguments);
                                                         } else {
                                                             await message.delete();
                                                             return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
@@ -96,17 +95,19 @@ class Command {
     }
 
     async #existCommand(cmd, prefix) {
+        let that = this;
         return new Promise(function (resolve, reject) {
             const args = cmd.slice(prefix.length).trim().split(/ +/g);
 
             const command = args.shift().toLowerCase();
 
             try {
-                let cmd = require(`../commands/${
-                    config.commands.find(arrcommand => arrcommand.cmd === command).id}.js`);
-
-                let cmdprops = config.commands.find(arrcommand => arrcommand.cmd === command);
-                return resolve({cmd, cmdprops, args});
+                const cmd = that.client.commands.get(command) || that.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(command));
+                if(cmd) {
+                    cmd.arguments = args;
+                    return resolve(cmd);
+                }
+                else return resolve(false);
             } catch (e) {
                 return reject(e);
             }
