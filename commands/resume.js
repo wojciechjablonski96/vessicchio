@@ -4,7 +4,19 @@
  * Written by Wojciech Jablonski <info@wojciechjablonski.com>, 2021
  */
 const Music = require('../app/Music');
-exports.use = async (client, args, message) => {
-    await new Music(client, message).resume().finally(() => {
-    });
+
+module.exports = {
+    cmd: "resume",
+    description: "Resume your paused music!",
+    aliases: [
+        "rs"
+    ],
+    permission: 1,
+    args: false,
+    module: "music",
+
+    execute(client, message, args) {
+        new Music(client, message).resume().finally(() => {
+        });
+    }
 }

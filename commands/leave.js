@@ -4,7 +4,19 @@
  * Written by Wojciech Jablonski <info@wojciechjablonski.com>, 2021
  */
 const Music = require('../app/Music');
-exports.use = async (client, args, message) => {
-    await new Music(client, message).leave().finally(() => {
-    });
+
+module.exports = {
+    cmd: "leave",
+    description: "You can kick me from your channel!",
+    aliases: [
+        "lv"
+    ],
+    permission: 1,
+    args: false,
+    module: "music",
+
+    execute(client, message, args) {
+        new Music(client, message).leave().finally(() => {
+        });
+    }
 }

@@ -6,19 +6,17 @@
 const Music = require('../app/Music');
 
 module.exports = {
-    cmd: "skip",
-    description: "If your friend's song is a shit you can skip it!",
+    cmd: "loop",
+    description: "Loop your queue!",
     aliases: [
-        "next",
-        "sk"
+        "lp"
     ],
     permission: 1,
     args: false,
     module: "music",
 
     execute(client, message, args) {
-        new Music(client, message).skip().finally(() => {
+        new Music(client, message).loop().finally(() => {
         });
     }
 }
-

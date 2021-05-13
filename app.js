@@ -14,13 +14,26 @@ const fs = require('fs');
 
 //Creating discord client
 const DiscordClient = new Discord.Client();
+
+
 DiscordClient.player = new Player(DiscordClient,{
     leaveOnEmpty:true,
-    leaveOnStop:true,
+    leaveOnStop:false,
     leaveOnEnd:true,
     autoSelfDeaf: false,
     leaveOnEndCooldown: 300000
 });
+
+DiscordClient.commands = new Discord.Collection();
+
+
+    const commands = fs.readdirSync(`./commands/`).filter(files => files.endsWith('.js'));
+
+    for (const file of commands) {
+        const command = require(`./commands/${file}`);
+        console.log(`[BOOT] Loaded COMMAND:  ${file}`);
+        DiscordClient.commands.set(command.cmd.toLowerCase(),command);
+    }
 
 
 const events = fs.readdirSync('./events').filter(file => file.endsWith('.js'));

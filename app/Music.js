@@ -128,8 +128,33 @@ class Music {
                     if (inSameVoice) {
                         await this.#isPlaying(this.message).then(async isPlaying => {
                             if (isPlaying) {
-                                if(this.client.player.shuffle(this.message)) return new Message(this.message.channel)
-                                    .createInfo('Queue shuffled with ' + this.client.player.getQueue(this.message).tracks.length +' songs!');
+                                if (this.client.player.shuffle(this.message)) return new Message(this.message.channel)
+                                    .createInfo('Queue shuffled with ' + this.client.player.getQueue(this.message).tracks.length + ' songs!');
+                            } else return await new Message(this.message.channel).createError('This bot is not playing now.');
+                        });
+                    } else return new Message(this.message.channel).createError('You are not in the same voice channel.');
+                });
+            } else return new Message(this.message.channel).createError('You are not in a voice channel.');
+        });
+    }
+
+    async loop() {
+        await this.#isVoiceChannel(this.message).then(async inVoice => {
+            if (inVoice) {
+                await this.#isSameVoiceChannel(this.message).then(async inSameVoice => {
+                    if (inSameVoice) {
+                        await this.#isPlaying(this.message).then(async isPlaying => {
+                            if (isPlaying) {
+                                if (this.client.player.getQueue(this.message).loopMode) {
+                                    this.client.player.setLoopMode(this.message, false);
+
+                                    return new Message(this.message.channel)
+                                        .createInfo('Queue loop disabled');
+                                } else {
+                                    this.client.player.setLoopMode(this.message, true);
+                                    return new Message(this.message.channel)
+                                        .createInfo('Queue loop enabled');
+                                }
                             } else return await new Message(this.message.channel).createError('This bot is not playing now.');
                         });
                     } else return new Message(this.message.channel).createError('You are not in the same voice channel.');
