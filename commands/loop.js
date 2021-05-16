@@ -16,7 +16,8 @@ module.exports = {
     module: "music",
 
     execute(client, message, args) {
-        new Music(client, message).loop().finally(() => {
-        });
+
+        let music = new Music(client, message);
+        music.loop().catch(e => console.log('[LOOP COMMAND] '+ e));
     }
 }

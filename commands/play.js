@@ -16,7 +16,7 @@ module.exports = {
     module: "music",
 
     execute(client, message, args) {
-        new Music(client, message).play(args).finally(() => {
-        });
+        let music = new Music(client, message);
+        music.play(args).catch(e => console.log('[PLAY COMMAND] '+ e));
     }
 }
