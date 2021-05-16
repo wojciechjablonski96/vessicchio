@@ -16,7 +16,7 @@ module.exports = {
     module: "music",
 
     execute(client, message, args) {
-        new Music(client, message).leave().finally(() => {
-        });
+        let music = new Music(client, message);
+        music.leave().catch(e => console.log('[LEAVE COMMAND] '+ e));
     }
 }

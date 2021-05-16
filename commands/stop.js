@@ -16,8 +16,8 @@ module.exports = {
     module: "music",
 
     execute(client, message, args) {
-        new Music(client, message).stop().finally(() => {
-        });
+        let music = new Music(client, message);
+        music.stop().catch(e => console.log('[STOP COMMAND] '+ e));
     }
 }
 

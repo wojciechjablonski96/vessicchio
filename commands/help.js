@@ -18,7 +18,9 @@ module.exports = {
     module: "main",
 
     execute(client, message, args) {
-        new Guild(message.guild).getGuild().then(async guild => {
+        let guild = new Guild(message.guild);
+
+        guild.getGuild().then(async guild => {
             let modules = JSON.parse(guild.modules);
             let commands = Array();
 
@@ -38,7 +40,7 @@ module.exports = {
             });
 
             await new Message(message.channel)
-                .createHelp(commands);
-        });
+                .createHelp(commands).catch(e => console.log('[HELP COMMAND] '+ e));
+        }).catch(e => console.log('[HELP COMMAND] '+ e));
     }
 }
