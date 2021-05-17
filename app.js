@@ -16,10 +16,10 @@ const fs = require('fs');
 const DiscordClient = new Discord.Client();
 
 
-DiscordClient.player = new Player(DiscordClient,{
-    leaveOnEmpty:true,
-    leaveOnStop:false,
-    leaveOnEnd:true,
+DiscordClient.player = new Player(DiscordClient, {
+    leaveOnEmpty: true,
+    leaveOnStop: false,
+    leaveOnEnd: true,
     autoSelfDeaf: false,
     leaveOnEndCooldown: 300000
 });
@@ -27,13 +27,13 @@ DiscordClient.player = new Player(DiscordClient,{
 DiscordClient.commands = new Discord.Collection();
 
 
-    const commands = fs.readdirSync(`./commands/`).filter(files => files.endsWith('.js'));
+const commands = fs.readdirSync(`./commands/`).filter(files => files.endsWith('.js'));
 
-    for (const file of commands) {
-        const command = require(`./commands/${file}`);
-        console.log(`[BOOT] Loaded COMMAND:  ${file}`);
-        DiscordClient.commands.set(command.cmd.toLowerCase(),command);
-    }
+for (const file of commands) {
+    const command = require(`./commands/${file}`);
+    console.log(`[BOOT] Loaded COMMAND:  ${file}`);
+    DiscordClient.commands.set(command.cmd.toLowerCase(), command);
+}
 
 
 const events = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
