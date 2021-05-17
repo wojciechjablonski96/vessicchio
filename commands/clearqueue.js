@@ -17,7 +17,7 @@ module.exports = {
 
     execute(client, message, args) {
 
-        let music = new Music(client, message);
+        const music = new Music(client, message);
         music.clearQueue().catch(e => console.log('[CLEARQUEUE COMMAND] '+ e));
     }
 }
