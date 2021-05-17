@@ -8,6 +8,7 @@ const Guild = require('../app/Guild');
 
 exports.use = async (DiscordClient) => {
     DiscordClient.on('guildCreate', (guild) => {
-        new Guild(guild).newGuild().finally(() => {});
+        const newguild = new Guild(guild);
+        newguild.newGuild().catch(e => console.log('GUILD JOIN: ' + e));
     });
 }

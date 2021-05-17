@@ -16,7 +16,7 @@ module.exports = {
     module: "music",
 
     execute(client, message, args) {
-        let music = new Music(client, message);
+        const music = new Music(client, message);
         music.shuffle().catch(e => console.log('[SHUFFLE COMMAND] '+ e));
     }
 }

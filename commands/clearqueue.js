@@ -6,17 +6,18 @@
 const Music = require('../app/Music');
 
 module.exports = {
-    cmd: "resume",
-    description: "Resume your paused music!",
+    cmd: "clearqueue",
+    description: "Delete all queue songs.",
     aliases: [
-        "rs"
+        "cq"
     ],
     permission: 1,
     args: false,
     module: "music",
 
     execute(client, message, args) {
+
         const music = new Music(client, message);
-        music.resume().catch(e => console.log('[RESUME COMMAND] '+ e));
+        music.clearQueue().catch(e => console.log('[CLEARQUEUE COMMAND] '+ e));
     }
 }

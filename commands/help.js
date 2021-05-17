@@ -18,7 +18,7 @@ module.exports = {
     module: "main",
 
     execute(client, message, args) {
-        let guild = new Guild(message.guild);
+        const guild = new Guild(message.guild);
 
         guild.getGuild().then(async guild => {
             let modules = JSON.parse(guild.modules);
