@@ -138,6 +138,27 @@ class Music {
         });
     }
 
+    async clearQueue() {
+        await this.#isVoiceChannel(this.message).then(async inVoice => {
+            if (inVoice) {
+                await this.#isSameVoiceChannel(this.message).then(async inSameVoice => {
+                    if (inSameVoice) {
+                        await this.#isPlaying(this.message).then(async isPlaying => {
+                            if (isPlaying) {
+                                await this.#isLongQueue().then(async isLong => {
+                                    if (isLong) {
+                                        await this.client.player.clearQueue(this.message);
+                                        return await new Message(this.message.channel).createInfo('Your queue was deleted.');
+                                    } else return await new Message(this.message.channel).createError('There is only one song in the queue.');
+                                });
+                            } else return await new Message(this.message.channel).createError('This bot is not playing now.');
+                        });
+                    } else return new Message(this.message.channel).createError('You are not in the same voice channel.');
+                });
+            } else return new Message(this.message.channel).createError('You are not in a voice channel.');
+        });
+    }
+
     async loop() {
         await this.#isVoiceChannel(this.message).then(async inVoice => {
             if (inVoice) {
@@ -191,6 +212,14 @@ class Music {
         let that = this;
         return new Promise(async function (resolve) {
             if (!that.client.player.getQueue(that.message)) return resolve(false);
+            else return resolve(true);
+        });
+    }
+
+    async #isLongQueue() {
+        let that = this;
+        return new Promise(async function (resolve) {
+            if (that.client.player.getQueue(that.message).tracks.length <= 1) return resolve(false);
             else return resolve(true);
         });
     }
