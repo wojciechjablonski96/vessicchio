@@ -8,7 +8,7 @@ const Guild = require('../app/Guild');
 
 exports.use = async (DiscordClient) => {
     DiscordClient.on('guildDelete', (guild) => {
-        new Guild(guild).deleteGuild().finally(() => {
-        });
+        const oldguild = new Guild(guild);
+        oldguild.deleteGuild().catch(e => console.log('GUILD EXIT: ' +e));
     });
 }

@@ -12,6 +12,7 @@ exports.use = async (DiscordClient) => {
 
         if (message.author.bot) return;
 
-        await new Command(DiscordClient).runCommand(message).finally(() => {});
+        const command = new Command(DiscordClient);
+        await command.runCommand(message).catch(e => console.log('RUN COMMAND: ' + e));
     });
 }
