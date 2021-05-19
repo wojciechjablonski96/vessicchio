@@ -14,7 +14,8 @@ var database = require('knex')({
     },
     migrations: {
         tableName: 'migrations'
-    }
+    },
+    pool: { min: 0, max: 7 }
 });
 
 module.exports = database;
