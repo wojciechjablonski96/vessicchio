@@ -9,7 +9,7 @@ module.exports = {
     cmd: "leave",
     description: "You can kick me from your channel!",
     aliases: [
-        "lv"
+        "lv","quit"
     ],
     permission: 1,
     args: false,
