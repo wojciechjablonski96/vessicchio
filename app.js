@@ -17,11 +17,18 @@ const DiscordClient = new Discord.Client();
 
 
 DiscordClient.player = new Player(DiscordClient, {
-    leaveOnEmpty: true,
-    leaveOnStop: false,
     leaveOnEnd: true,
+    leaveOnEndCooldown: 300000,
+    leaveOnStop: false,
+    leaveOnEmpty: true,
+    leaveOnEmptyCooldown: 0,
     autoSelfDeaf: false,
-    leaveOnEndCooldown: 300000
+    enableLive: false,
+    ytdlDownloadOptions: {},
+    useSafeSearch: false,
+    disableAutoRegister: false,
+    disableArtistSearch: false,
+    fetchBeforeQueued: false
 });
 
 DiscordClient.commands = new Discord.Collection();
