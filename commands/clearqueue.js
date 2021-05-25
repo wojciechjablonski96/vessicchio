@@ -7,7 +7,7 @@ const Music = require('../app/Music');
 
 module.exports = {
     cmd: "clearqueue",
-    description: "Delete all queue songs.",
+    description: "Delete all queue's songs.",
     aliases: [
         "cq"
     ],
