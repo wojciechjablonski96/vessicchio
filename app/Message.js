@@ -41,11 +41,7 @@ class Message {
 
         let msg = new Discord.MessageEmbed()
             .setColor(process.env.COLOR_ERROR)
-            .setTitle(errorMessage)
-            .setAuthor(process.env.NAME)
-            .setThumbnail(process.env.LOGO)
-            .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | ' + process.env.VERSION.toString())
-            .setTimestamp();
+            .setFooter(errorMessage)
 
         if (details) msg.setDescription(details);
 
@@ -62,11 +58,8 @@ class Message {
 
         let msg = new Discord.MessageEmbed()
             .setColor(process.env.COLOR_INFO)
-            .setTitle(infoMessage)
-            .setAuthor(process.env.NAME)
-            .setThumbnail(process.env.LOGO)
-            .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | ' + process.env.VERSION.toString())
-            .setTimestamp();
+            .setFooter(infoMessage)
+
 
         if (details) msg.setDescription(details);
 
@@ -83,7 +76,6 @@ class Message {
         let msg = new Discord.MessageEmbed()
             .setDescription(song.title)
             .setAuthor(process.env.NAME)
-            .setThumbnail(process.env.LOGO)
             .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | ' + process.env.VERSION.toString())
             .setTimestamp();
 
