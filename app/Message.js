@@ -87,7 +87,7 @@ class Message {
             ]);
         } else {
             msg.setTitle('Now playing');
-            msg.setImage(song.thumbnail);
+            msg.setThumbnail(song.thumbnail);
             msg.setColor(process.env.COLOR_PRIMARY);
             msg.addFields([
                 {name: 'Channel', value: song.author, inline: true},
