@@ -41,7 +41,6 @@ class Music {
             if (!res[2]) return new Message(this.message.channel)
                 .createError('This bot is not playing now.');
 
-            this.client.player.setRepeatMode(this.message, false);
             if (this.client.player.stop(this.message)) return new Message(this.message.channel)
                 .createInfo('Bot has been stopped');
 
@@ -70,15 +69,15 @@ class Music {
     async leave() {
         await Promise.all([
             this.#isVoiceChannel(this.message),
-            this.#isSameVoiceChannel(this.message)
+            this.#isSameVoiceChannel(this.message),
+            this.#isPlaying(this.message)
         ]).then(res => {
             if (!res[0]) return new Message(this.message.channel)
                 .createError('You are not in a voice channel.');
             if (!res[1]) return new Message(this.message.channel)
                 .createError('You are not in the same voice channel.');
 
-            this.client.player.setRepeatMode(this.message, false);
-            this.client.player.stop(this.message);
+            if (res[2]) this.client.player.stop(this.message);
 
             if (this.message.guild.me.voice.channel)
                 this.message.guild.me.voice.kick().then(() => {
