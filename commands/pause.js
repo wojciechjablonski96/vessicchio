@@ -17,7 +17,7 @@ module.exports = {
 
     execute(client, message, args) {
         const music = new Music(client, message);
-        music.pause().catch(e => console.log('[PAUSE COMMAND] '+ e));
+        music.pause().catch(e => console.log('[PAUSE COMMAND] ' + e));
     }
 }
 

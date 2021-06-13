@@ -60,7 +60,6 @@ class Message {
             .setColor(process.env.COLOR_INFO)
             .setFooter(infoMessage)
 
-
         if (details) msg.setDescription(details);
 
         return this.entity.send(msg).then(message => {

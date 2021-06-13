@@ -18,6 +18,6 @@ module.exports = {
     execute(client, message, args) {
 
         const music = new Music(client, message);
-        music.clearQueue().catch(e => console.log('[CLEARQUEUE COMMAND] '+ e));
+        music.clearQueue().catch(e => console.log('[CLEARQUEUE COMMAND] ' + e));
     }
 }
