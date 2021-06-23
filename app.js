@@ -30,6 +30,8 @@ DiscordClient.player = new Player(DiscordClient, {
     disableArtistSearch: false,
     fetchBeforeQueued: false
 });
+DiscordClient.player.use("YOUTUBE_DL", require("@discord-player/downloader").Downloader);
+
 
 DiscordClient.commands = new Discord.Collection();
 

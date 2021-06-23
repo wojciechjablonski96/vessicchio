@@ -7,6 +7,7 @@
   "author": "Wojciech Jablonski <info@wojciechjablonski.com>",
   "license": "MIT",
   "dependencies": {
+    "@discord-player/downloader": "^2.0.3",
     "@discord-player/extractor": "^3.0.0",
     "@discordjs/opus": "discordjs/opus",
     "discord-player": "^4.1.2",
