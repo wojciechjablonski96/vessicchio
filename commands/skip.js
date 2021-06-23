@@ -18,7 +18,7 @@ module.exports = {
 
     execute(client, message, args) {
         const music = new Music(client, message);
-        music.skip().catch(e => console.log('[SKIP COMMAND] '+ e));
+        music.skip().catch(e => console.log('[SKIP COMMAND] ' + e));
     }
 }
 

@@ -40,7 +40,7 @@ module.exports = {
             });
 
             await new Message(message.channel)
-                .createHelp(commands).catch(e => console.log('[HELP COMMAND] '+ e));
-        }).catch(e => console.log('[HELP COMMAND] '+ e));
+                .createHelp(commands).catch(e => console.log('[HELP COMMAND] ' + e));
+        }).catch(e => console.log('[HELP COMMAND] ' + e));
     }
 }

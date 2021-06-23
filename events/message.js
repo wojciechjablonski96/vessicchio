@@ -7,7 +7,7 @@
 const Command = require('../app/Command');
 
 exports.use = async (DiscordClient) => {
-    DiscordClient.on('message', async(message) => {
+    DiscordClient.on('message', async (message) => {
         if (message.channel.type === 'dm') return;
 
         if (message.author.bot) return;

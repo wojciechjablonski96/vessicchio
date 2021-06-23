@@ -18,6 +18,6 @@ module.exports = {
     execute(client, message, args) {
 
         const music = new Music(client, message);
-        music.loop().catch(e => console.log('[LOOP COMMAND] '+ e));
+        music.loop().catch(e => console.log('[LOOP COMMAND] ' + e));
     }
 }

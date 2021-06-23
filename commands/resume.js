@@ -17,6 +17,6 @@ module.exports = {
 
     execute(client, message, args) {
         const music = new Music(client, message);
-        music.resume().catch(e => console.log('[RESUME COMMAND] '+ e));
+        music.resume().catch(e => console.log('[RESUME COMMAND] ' + e));
     }
 }

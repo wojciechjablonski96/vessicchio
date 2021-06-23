@@ -9,7 +9,7 @@ module.exports = {
     cmd: "leave",
     description: "You can kick me from your channel!",
     aliases: [
-        "lv","quit"
+        "lv", "quit"
     ],
     permission: 1,
     args: false,
@@ -17,6 +17,6 @@ module.exports = {
 
     execute(client, message, args) {
         const music = new Music(client, message);
-        music.leave().catch(e => console.log('[LEAVE COMMAND] '+ e));
+        music.leave().catch(e => console.log('[LEAVE COMMAND] ' + e));
     }
 }
