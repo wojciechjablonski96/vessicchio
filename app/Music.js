@@ -6,8 +6,6 @@
 
 
 const Message = require('./Message');
-const { Util } = require("discord-player");
-
 
 class Music {
     constructor(client, message) {
@@ -25,15 +23,9 @@ class Music {
             if (!values[1]) return new Message(this.message.channel)
                 .createError('You are not in the same voice channel.');
 
-            if (Util.isURL(song.join(" "))) return this.client.player.play(this.message, song.join(" "), { firstResult: true });
-            const tracks = await Util.ytSearch(song.join(" "), {
-                user: this.message.author,
-                player: this.client.player
-            }).catch(() => {});
-
-            if (!tracks || !tracks.length) return this.message.channel.send("Track not found!");
-
-            await this.client.player.play(this.message, tracks[0].url, {firstResult: true});
+            await this.client.player.play(this.message, song.join(" "), {firstResult: true}).catch(e => {
+                console.log(e);
+            });
 
         }).catch(e => console.log('PLAY METHOD: ' + e));
     }
