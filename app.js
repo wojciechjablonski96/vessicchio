@@ -24,11 +24,7 @@ DiscordClient.player = new Player(DiscordClient, {
     leaveOnEmptyCooldown: 0,
     autoSelfDeaf: false,
     enableLive: false,
-    ytdlDownloadOptions: {},
-    useSafeSearch: false,
-    disableAutoRegister: false,
-    disableArtistSearch: false,
-    fetchBeforeQueued: false
+    ytdlDownloadOptions: {}
 });
 
 DiscordClient.commands = new Discord.Collection();
