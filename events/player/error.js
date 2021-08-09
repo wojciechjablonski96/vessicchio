@@ -1,6 +1,7 @@
 const Message = require('../../app/Message');
 
-module.exports = (client, error, message, ...args) => {
+module.exports = async (client, error, message, ...args) => {
+    console.log(error);
     switch (error) {
         case 'NotPlaying':
             return new Message(message.channel)
@@ -18,7 +19,7 @@ module.exports = (client, error, message, ...args) => {
             return new Message(message.channel)
                 .createError('Bot is starting, please wait!');
         default:
-            return new Message(message.channel)
+            return await new Message(message.channel)
                 .createError(`Something went wrong. ERROR: ${error}`);
     }
 };
