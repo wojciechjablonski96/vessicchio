@@ -50,7 +50,7 @@ class Command {
                                 });
                             }
                         }).catch(e => {
-                            //NOTHING
+                            console.log(e);
                         });
                     } else {
                         //NOTHING
@@ -61,7 +61,7 @@ class Command {
     }
 
     async #checkTrueChannel(module, message) {
-        return new Promise(async function (resolve) {
+        return new Promise(async function (resolve, reject) {
             await new Guild(message.guild).getGuild().then(async guild => {
                 let channels = JSON.parse(guild.channels);
                 if (!channels.hasOwnProperty(module)) {
@@ -69,27 +69,43 @@ class Command {
                 } else {
                     if (channels[module].includes(message.channel.id))
                         return resolve(true);
-                    else return resolve(false);
+                    else
+                        return resolve(false);
                 }
+            }).catch(e => {
+                return reject(e);
             });
         });
     }
 
     async #checkPermission(permission, member, guild) {
-        return new Promise(async function (resolve) {
-            switch (permission) {
-                case 3:
-                    if (member.id === guild.owner) return resolve(true);
-                    else return resolve(false);
-                case 2:
-                    if (member.id === guild.owner) return resolve(true);
-                    else if (member.roles.cache.some(r => JSON.parse(guild.administrators).includes(r.id))) return resolve(true);
-                    else return resolve(false);
-                case 1:
-                    if (member.id === guild.owner) return resolve(true);
-                    else if (member.roles.cache.some(r => JSON.parse(guild.administrators).includes(r.id))) return resolve(true);
-                    else if (member.roles.cache.some(r => JSON.parse(guild.users).includes(r.id))) return resolve(true);
-                    else return resolve(false);
+        return new Promise(async function (resolve, reject) {
+            try {
+                switch (permission) {
+                    case 3:
+                        if (member.id === guild.owner)
+                            return resolve(true);
+                        else
+                            return resolve(false);
+                    case 2:
+                        if (member.id === guild.owner)
+                            return resolve(true);
+                        else if (member.roles.cache.some(r => JSON.parse(guild.administrators).includes(r.id)))
+                            return resolve(true);
+                        else
+                            return resolve(false);
+                    case 1:
+                        if (member.id === guild.owner)
+                            return resolve(true);
+                        else if (member.roles.cache.some(r => JSON.parse(guild.administrators).includes(r.id)))
+                            return resolve(true);
+                        else if (member.roles.cache.some(r => JSON.parse(guild.users).includes(r.id)))
+                            return resolve(true);
+                        else
+                            return resolve(false);
+                }
+            } catch (e) {
+                return reject(e);
             }
         });
     }
@@ -97,17 +113,18 @@ class Command {
     async #existCommand(cmd, prefix) {
         let that = this;
         return new Promise(function (resolve, reject) {
+
             const args = cmd.slice(prefix.length).trim().split(/ +/g);
 
             const command = args.shift().toLowerCase();
 
             try {
                 const cmd = that.client.commands.get(command) || that.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(command));
-                if(cmd) {
+
+                if (cmd) {
                     cmd.arguments = args;
                     return resolve(cmd);
-                }
-                else return resolve(false);
+                } else return resolve(false);
             } catch (e) {
                 return reject(e);
             }
@@ -119,9 +136,15 @@ class Command {
     }
 
     async #isCommand(message, prefix) {
-        return new Promise(function (resolve) {
-            if (message.content.indexOf(prefix)) return resolve(false);
-            else return resolve(true);
+        return new Promise(function (resolve, reject) {
+            try {
+                if (message.content.indexOf(prefix))
+                    return resolve(false);
+                else
+                    return resolve(true);
+            } catch (e) {
+                return reject(e);
+            }
         });
     }
 }
