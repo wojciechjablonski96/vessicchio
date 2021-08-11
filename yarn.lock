@@ -544,10 +544,10 @@ discord-api-types@^0.22.0:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.22.0.tgz#34dc57fe8e016e5eaac5e393646cd42a7e1ccc2a"
   integrity sha512-l8yD/2zRbZItUQpy7ZxBJwaLX/Bs2TGaCthRppk8Sw24LOIWg12t9JEreezPoYD0SQcC2htNNo27kYEpYW/Srg==
 
-discord-player@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/discord-player/-/discord-player-5.0.1.tgz#5903b698edc98ff90728110cbef83b757393331c"
-  integrity sha512-q/UtCzPUmMPuhvCmwij8rSOXv/OZ0C9GLid28MtSE7A6W0rAnsDk/CyrNNw82qYfhQLcjPqAarzXQeNgyUF+rQ==
+discord-player@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/discord-player/-/discord-player-5.0.2.tgz#3d4e3b669871076b602a744382abcee52296037a"
+  integrity sha512-17iTtTExDzX1XXScZ7AmC2eRduLkeFv8o4kYYMMp6YS9IZVH4+/LerEGLdGAO+pVWChWXFIxwHVTinrZjhSU3Q==
   dependencies:
     "@discordjs/voice" "^0.5.5"
     discord-ytdl-core "^5.0.4"
