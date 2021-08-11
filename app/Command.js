@@ -32,18 +32,18 @@ class Command {
                                     } else return this.interaction.reply({
                                         embeds: [new Message()
                                             .createError('You cannot use this command in this channel!')]
-                                    });
+                                    , ephemeral: true});
 
                                 });
                             } else return this.interaction.reply({
                                 embeds: [new Message()
                                     .createError('You do not have permission to use this command!')]
-                            });
+                            , ephemeral: true});
                         });
                 } else return this.interaction.reply({
                     embeds: [new Message()
                         .createError('This command is not available on your discord server! \\n Please contact our support!')]
-                });
+                , ephemeral: true});
             });
         });
     }
