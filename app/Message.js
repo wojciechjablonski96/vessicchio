@@ -1,25 +1,24 @@
-/* Copyright (C) Wojciech Jablonski - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- * Written by Wojciech Jablonski <info@wojciechjablonski.com>, April 2021
+/*
+ * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
+ *
+ * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Wojciech Jablonski <info@wojciechjablonski.com>.
  */
 
 const Discord = require('discord.js');
 const Moment = require('moment');
 
 class Message {
-    constructor(entity, autodelete = 0) {
-
-        this.entity = entity;
-
-        if (autodelete !== 0)
-            this.autodelete = autodelete * 1000;
-        else
-            this.autodelete = false;
+    constructor() {
+        //Nothing
     }
 
     async createHelp(commands) {
-        let msg = new Discord.MessageEmbed()
+        return new Discord.MessageEmbed()
             .setColor(process.env.COLOR_INFO)
             .setTitle('Vessicchio HELP')
             .setURL('https://vessicchio.termi.gg')
@@ -28,47 +27,18 @@ class Message {
             .addFields(commands)
             .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | ' + process.env.VERSION.toString())
             .setTimestamp();
-        return this.entity.send(msg).then(message => {
-            if (this.autodelete)
-                var timeout = setTimeout(function () {
-                    message.delete();
-                    clearTimeout(timeout);
-                }, this.autodelete);
-        });
     }
 
-    createError(errorMessage, details = null) {
-
-        let msg = new Discord.MessageEmbed()
+    createError(errorMessage) {
+        return new Discord.MessageEmbed()
             .setColor(process.env.COLOR_ERROR)
-            .setFooter(errorMessage)
-
-        if (details) msg.setDescription(details);
-
-        return this.entity.send(msg).then(message => {
-            if (this.autodelete)
-                var timeout = setTimeout(function () {
-                    message.delete();
-                    clearTimeout(timeout);
-                }, this.autodelete);
-        });
+            .setDescription(errorMessage);
     }
 
-    createInfo(infoMessage, details = null) {
-
-        let msg = new Discord.MessageEmbed()
+    createInfo(infoMessage) {
+        return new Discord.MessageEmbed()
             .setColor(process.env.COLOR_INFO)
-            .setFooter(infoMessage)
-
-        if (details) msg.setDescription(details);
-
-        return this.entity.send(msg).then(message => {
-            if (this.autodelete)
-                var timeout = setTimeout(function () {
-                    message.delete();
-                    clearTimeout(timeout);
-                }, this.autodelete);
-        });
+            .setDescription(infoMessage)
     }
 
     createSong(song, client, type) {
@@ -96,14 +66,7 @@ class Message {
                 {name: 'Duration', value: song.duration, inline: true},
             ]);
         }
-
-        return this.entity.send(msg).then(message => {
-            if (this.autodelete)
-                var timeout = setTimeout(function () {
-                    message.delete();
-                    clearTimeout(timeout);
-                }, this.autodelete);
-        });
+        return msg;
     }
 }
 
