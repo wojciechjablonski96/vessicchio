@@ -1,81 +1,55 @@
-/* Copyright (C) Wojciech Jablonski - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- * Written by Wojciech Jablonski <info@wojciechjablonski.com>, April 2021
+/*
+ * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
+ *
+ * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Wojciech Jablonski <info@wojciechjablonski.com>.
  */
+
 const Guild = require('./Guild');
 const Message = require('./Message');
 
 class Command {
-    constructor(client) {
-        this.client = client;
+    constructor(interaction) {
+        this.interaction = interaction;
     }
 
-    async runCommand(message) {
-        await new Guild(message.guild).getGuild().then(async guild => {
-            if (guild) {
-                await this.#isCommand(message, guild.prefix).then(async isCommand => {
-                    if (isCommand) {
-                        await this.#existCommand(message.content, guild.prefix).then(async command => {
-                            if (command) {
-                                await this.#checkModule(command, guild.modules).then(async avaiable => {
-                                    if (avaiable) {
-                                        await this.#checkPermission(command.permission, message.member, guild).then(async authorized => {
-                                            if (authorized) {
-                                                await this.#checkTrueChannel(command.module, message).then(async truechannel => {
-                                                    if (truechannel) {
-                                                        if (command.args === true && command.arguments.length > 0 || command.args === false) {
-                                                            await command.execute(this.client, message, command.arguments);
-                                                        } else {
-                                                            await message.delete();
-                                                            return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
-                                                                .createError('This command needs args! You can use !help for more info.');
-                                                        }
-                                                    } else {
-                                                        //Nothing wrong channel error
-                                                    }
-                                                });
-                                            } else {
-                                                await message.delete();
-                                                return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
-                                                    .createError('You do not have permission to use this command!');
-                                            }
-                                        });
-                                    } else {
-                                        await message.delete();
-                                        return await new Message(message.channel, process.env.ERROR_DELETE_TIEMOUT)
-                                            .createError('This command is not available on your discord server! \n Please contact our support!');
+    async runCommand() {
+        const guild = new Guild(this.interaction.guild);
+        await guild.getGuild().then(async guild => {
+            const command = await this.interaction.client.commands.get(this.interaction.commandName);
+            await this.#checkModule(command, guild.modules).then(async available => {
+                if (available) {
+                    await this.#checkPermission(command.permission, this.interaction.member, guild)
+                        .then(async authorized => {
+                            if (authorized) {
+                                await this.#checkTrueChannel(command.module, guild).then(async truechannel => {
+                                    if (truechannel) {
+                                        await command.execute(this.interaction);
+                                    } else return this.interaction.reply({
+                                        embeds: [new Message()
+                                            .createError('You cannot use this command in this channel!')]
+                                    });
 
-                                    }
                                 });
-                            }
-                        }).catch(e => {
-                            console.log(e);
+                            } else return this.interaction.reply({
+                                embeds: [new Message()
+                                    .createError('You do not have permission to use this command!')]
+                            });
                         });
-                    } else {
-                        //NOTHING
-                    }
+                } else return this.interaction.reply({
+                    embeds: [new Message()
+                        .createError('This command is not available on your discord server! \\n Please contact our support!')]
                 });
-            }
-        });
-    }
-
-    async #checkTrueChannel(module, message) {
-        return new Promise(async function (resolve, reject) {
-            await new Guild(message.guild).getGuild().then(async guild => {
-                let channels = JSON.parse(guild.channels);
-                if (!channels.hasOwnProperty(module)) {
-                    return resolve(true);
-                } else {
-                    if (channels[module].includes(message.channel.id))
-                        return resolve(true);
-                    else
-                        return resolve(false);
-                }
-            }).catch(e => {
-                return reject(e);
             });
         });
+    }
+
+    async #checkModule(cmd, modules) {
+        return JSON.parse(modules).includes(cmd.module);
     }
 
     async #checkPermission(permission, member, guild) {
@@ -110,38 +84,19 @@ class Command {
         });
     }
 
-    async #existCommand(cmd, prefix) {
+    async #checkTrueChannel(module, guild) {
         let that = this;
-        return new Promise(function (resolve, reject) {
-
-            const args = cmd.slice(prefix.length).trim().split(/ +/g);
-
-            const command = args.shift().toLowerCase();
-
+        return new Promise(async function (resolve, reject) {
             try {
-                const cmd = that.client.commands.get(command) || that.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(command));
-
-                if (cmd) {
-                    cmd.arguments = args;
-                    return resolve(cmd);
-                } else return resolve(false);
-            } catch (e) {
-                return reject(e);
-            }
-        });
-    }
-
-    async #checkModule(cmd, modules) {
-        return JSON.parse(modules).includes(cmd.module);
-    }
-
-    async #isCommand(message, prefix) {
-        return new Promise(function (resolve, reject) {
-            try {
-                if (message.content.indexOf(prefix))
-                    return resolve(false);
-                else
+                let channels = JSON.parse(guild.channels);
+                if (!channels.hasOwnProperty(module)) {
                     return resolve(true);
+                } else {
+                    if (channels[module].includes(that.interaction.channelId))
+                        return resolve(true);
+                    else
+                        return resolve(false);
+                }
             } catch (e) {
                 return reject(e);
             }
