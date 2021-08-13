@@ -1,23 +1,25 @@
-/* Copyright (C) Wojciech Jablonski - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- * Written by Wojciech Jablonski <info@wojciechjablonski.com>, 2021
+/*
+ * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
+ *
+ * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Wojciech Jablonski <info@wojciechjablonski.com>.
  */
+
 const Music = require('../app/Music');
 
 module.exports = {
-    cmd: "clearqueue",
+    name: "clearqueue",
     description: "Delete all queue's songs.",
-    aliases: [
-        "cq"
-    ],
     permission: 1,
-    args: false,
     module: "music",
 
-    execute(client, message, args) {
+    async execute(interaction) {
 
-        const music = new Music(client, message);
-        music.clearQueue().catch(e => console.log('[CLEARQUEUE COMMAND] ' + e));
+        const music = new Music(interaction);
+        await music.clearQueue().catch(e => console.log('[CLEARQUEUE COMMAND] ' + e));
     }
 }
