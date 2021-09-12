@@ -1,5 +1,6 @@
 # Vessicchio - "it's not just a music bot"
 
+[![CodeFactor](https://www.codefactor.io/repository/github/wojciechjablonski96/vessicchio/badge?s=cf93e39c12b7a91e0c32dc1c5109b82d58da5674)](https://www.codefactor.io/repository/github/wojciechjablonski96/vessicchio)
 
 ## Installation
 
