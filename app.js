@@ -28,7 +28,8 @@ DiscordClient.player = new Player(DiscordClient, {
     useSafeSearch: false,
     disableAutoRegister: false,
     disableArtistSearch: false,
-    fetchBeforeQueued: false
+    fetchBeforeQueued: false,
+    ytdlOptions: { quality: 'highestaudio' }
 });
 
 DiscordClient.commands = new Discord.Collection();
