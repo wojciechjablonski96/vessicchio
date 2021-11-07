@@ -60,4 +60,4 @@ for (const file of player) {
     DiscordClient.player.on(file.split(".")[0], event.bind(null, DiscordClient));
 }
 
-DiscordClient.login(process.env.TOKEN);
+DiscordClient.login(process.env.DISCORD_CLIENT_TOKEN);
