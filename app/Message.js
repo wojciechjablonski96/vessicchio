@@ -17,18 +17,6 @@ class Message {
         //Nothing
     }
 
-    async createHelp(commands) {
-        return new Discord.MessageEmbed()
-            .setColor(process.env.COLOR_INFO)
-            .setTitle('Vessicchio HELP')
-            .setURL('https://vessicchio.termi.gg')
-            .setAuthor(process.env.NAME)
-            .setThumbnail(process.env.LOGO)
-            .addFields(commands)
-            .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | ' + process.env.VERSION.toString())
-            .setTimestamp();
-    }
-
     createError(errorMessage) {
         return new Discord.MessageEmbed()
             .setColor(process.env.COLOR_ERROR)
@@ -41,7 +29,7 @@ class Message {
             .setDescription(infoMessage)
     }
 
-    createSong(song, client, type) {
+    createSong(song, type) {
         let msg = new Discord.MessageEmbed()
             .setDescription(song.title)
             .setAuthor(process.env.NAME)
