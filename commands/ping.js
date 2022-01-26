@@ -9,13 +9,27 @@
  * Wojciech Jablonski <info@wojciechjablonski.com>.
  */
 
-module.exports = {
-    name: "ping",
-    description: "Controllo latenza BOT",
-    permission: 2,
-    module: "main",
+const {SlashCommand} = require('slash-create');
 
-    async execute(interaction) {
-        await interaction.reply({ content:`Latenza client BOT: ${interaction.client.ws.ping}ms`});
+const Message = require('../app/Message');
+
+module.exports = class PingCommand extends SlashCommand {
+    constructor(creator) {
+        super(creator, {
+            name: 'ping',
+            description: 'Mostra il ping del web socket.',
+        });
+
+        this.filePath = __filename;
+    }
+
+    async run(ctx) {
+        const {client} = require('..');
+        return {
+            embeds: [
+                new Message().createInfo(`Latenza del client BOT: ${client.ws.ping}ms`)
+            ], ephemeral: false
+        }
     }
 }
+
