@@ -1,109 +1,57 @@
-/* Copyright (C) Wojciech Jablonski - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- * Written by Wojciech Jablonski <info@wojciechjablonski.com>, April 2021
+/*
+ * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
+ *
+ * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Wojciech Jablonski <info@wojciechjablonski.com>.
  */
 
 const Discord = require('discord.js');
-const Moment = require('moment');
 
 class Message {
-    constructor(entity, autodelete = 0) {
-
-        this.entity = entity;
-
-        if (autodelete !== 0)
-            this.autodelete = autodelete * 1000;
-        else
-            this.autodelete = false;
+    constructor() {
+        //Nothing
     }
 
-    async createHelp(commands) {
-        let msg = new Discord.MessageEmbed()
-            .setColor(process.env.COLOR_INFO)
-            .setTitle('Vessicchio HELP')
-            .setURL('https://vessicchio.termi.gg')
-            .setAuthor(process.env.NAME)
-            .setThumbnail(process.env.LOGO)
-            .addFields(commands)
-            .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | ' + process.env.VERSION.toString())
-            .setTimestamp();
-        return this.entity.send(msg).then(message => {
-            if (this.autodelete)
-                var timeout = setTimeout(function () {
-                    message.delete();
-                    clearTimeout(timeout);
-                }, this.autodelete);
-        });
-    }
-
-    createError(errorMessage, details = null) {
-
-        let msg = new Discord.MessageEmbed()
+    createError(errorMessage) {
+        return new Discord.MessageEmbed()
             .setColor(process.env.COLOR_ERROR)
-            .setFooter(errorMessage)
-
-        if (details) msg.setDescription(details);
-
-        return this.entity.send(msg).then(message => {
-            if (this.autodelete)
-                var timeout = setTimeout(function () {
-                    message.delete();
-                    clearTimeout(timeout);
-                }, this.autodelete);
-        });
+            .setDescription(errorMessage);
     }
 
-    createInfo(infoMessage, details = null) {
-
-        let msg = new Discord.MessageEmbed()
+    createInfo(infoMessage) {
+        return new Discord.MessageEmbed()
             .setColor(process.env.COLOR_INFO)
-            .setFooter(infoMessage)
-
-        if (details) msg.setDescription(details);
-
-        return this.entity.send(msg).then(message => {
-            if (this.autodelete)
-                var timeout = setTimeout(function () {
-                    message.delete();
-                    clearTimeout(timeout);
-                }, this.autodelete);
-        });
+            .setDescription(infoMessage)
     }
 
-    createSong(song, client, type) {
+    createSong(queue, song, type) {
         let msg = new Discord.MessageEmbed()
             .setDescription(song.title)
-            .setAuthor(process.env.NAME)
-            .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | ' + process.env.VERSION.toString())
             .setTimestamp();
 
         if (type === 1) {
             msg.setTitle('Added to queue');
             msg.setColor(process.env.COLOR_SUCCESS);
             msg.addFields([
-                {name: 'Requested by', value: song.requestedBy.username, inline: false},
+                {name: 'Requested by', value: song.requestedBy ? song.requestedBy.username.toString() : 'Not available', inline: false},
+                {name: 'Will be played in', value: queue.connection.channel.name.toString(), inline: false},
             ]);
         } else {
             msg.setTitle('Now playing');
             msg.setThumbnail(song.thumbnail);
             msg.setColor(process.env.COLOR_PRIMARY);
             msg.addFields([
-                {name: 'Channel', value: song.author, inline: true},
-                {name: 'Requested by', value: song.requestedBy.username, inline: true},
-
-                {name: 'Views', value: song.views, inline: true},
-                {name: 'Duration', value: song.duration, inline: true},
+                {name: 'Author', value: song.author ? song.author.toString() : 'Not available', inline: true},
+                {name: 'Requested by', value: song.requestedBy ? song.requestedBy.username.toString() : 'Not available', inline: false},
+                {name: 'Views', value: song.views ? song.views.toString() : 'Not available', inline: true},
+                {name: 'Duration', value: song.duration ? song.duration.toString() : 'Not available', inline: true},
             ]);
         }
-
-        return this.entity.send(msg).then(message => {
-            if (this.autodelete)
-                var timeout = setTimeout(function () {
-                    message.delete();
-                    clearTimeout(timeout);
-                }, this.autodelete);
-        });
+        return msg;
     }
 }
 

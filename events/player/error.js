@@ -1,25 +1,21 @@
+/*
+ * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
+ *
+ * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Wojciech Jablonski <info@wojciechjablonski.com>.
+ */
 const Message = require('../../app/Message');
 
-module.exports = async (client, error, message, ...args) => {
-    console.log(error);
-    switch (error) {
-        case 'NotPlaying':
-            return new Message(message.channel)
-                .createError('Currently, the bot is not playing anything!');
-        case 'NotConnected':
-            return new Message(message.channel)
-                .createError('You are not connected in a voice channel!');
-        case 'UnableToJoin':
-            return new Message(message.channel)
-                .createError('The bot is unable to join your channel, check permissions!');
-        case 'VideoUnavailable':
-            return new Message(message.channel)
-                .createError(`${args[0].title} is not available in your country!`);
-        case 'MusicStarting':
-            return new Message(message.channel)
-                .createError('Bot is starting, please wait!');
-        default:
-            return await new Message(message.channel)
-                .createError(`Something went wrong. ERROR: ${error}`);
+module.exports = class {
+    constructor(client) {
+        this.client = client;
     }
-};
+
+    async create(queue,error) {
+        console.log(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
+    }
+}

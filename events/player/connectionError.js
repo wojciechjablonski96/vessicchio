@@ -8,13 +8,14 @@
  * in whole or in part, without the express written permission of
  * Wojciech Jablonski <info@wojciechjablonski.com>.
  */
+const Message = require('../../app/Message');
 
 module.exports = class {
     constructor(client) {
         this.client = client;
     }
 
-    async create(client) {
-        await this.client.user.setActivity("i'm trying slash commands", {type: "LISTENING",});
+    async create(queue,error) {
+        console.log(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
     }
 }

@@ -9,41 +9,15 @@
  * Wojciech Jablonski <info@wojciechjablonski.com>.
  */
 
-const {SlashCommand, CommandOptionType} = require('slash-create');
-const {QueueRepeatMode} = require('discord-player');
+const {SlashCommand} = require('slash-create');
 
 const Message = require('../app/Message');
 
-module.exports = class loopCommand extends SlashCommand {
+module.exports = class clearCommand extends SlashCommand {
     constructor(creator) {
         super(creator, {
-            name: 'loop',
-            description: 'Enable/disable loops',
-            options: [
-                {
-                    name: 'mode',
-                    type: CommandOptionType.INTEGER,
-                    description: 'Loop type',
-                    required: true,
-                    choices: [
-                        {
-                            name: 'Off',
-                            value: QueueRepeatMode.OFF
-                        },
-                        {
-                            name: 'Track',
-                            value: QueueRepeatMode.TRACK
-                        },
-                        {
-                            name: 'Queue',
-                            value: QueueRepeatMode.QUEUE
-                        },
-                        {
-                            name: 'Autoplay',
-                            value: QueueRepeatMode.AUTOPLAY
-                        }
-                    ]
-                }]
+            name: 'clear',
+            description: 'Clear the queue',
         });
         this.filePath = __filename;
     }
@@ -54,14 +28,13 @@ module.exports = class loopCommand extends SlashCommand {
         const guild = client.guilds.cache.get(ctx.guildID);
         const member = guild.members.cache.get(ctx.user.id) ?? await guild.members.fetch(ctx.user.id);
         const bot = guild.members.cache.get(ctx.data.application_id) ?? await guild.members.fetch(ctx.data.application_id);
-
         await ctx.defer();
 
         if (!member.voice.channel) return ctx.sendFollowUp({
             embeds: [
                 new Message().createError("You are not in a voice channel!")
             ], ephemeral: true
-        });
+        })
 
         if(bot.voice.channelId && bot.voice.channel.id !== member.voice.channel.id) return ctx.sendFollowUp({
             embeds: [
@@ -70,21 +43,22 @@ module.exports = class loopCommand extends SlashCommand {
         });
 
         const queue = client.player.getQueue(ctx.guildID);
+
         if (!queue || !queue.playing) return ctx.sendFollowUp({
             embeds: [
                 new Message().createError("This bot is not playing right now!")
             ], ephemeral: true
         });
 
-        const loopMode = ctx.options.mode;
-        const success = queue.setRepeatMode(loopMode);
-        const mode = loopMode === QueueRepeatMode.TRACK ? '🔂' : loopMode === QueueRepeatMode.QUEUE ? '🔁' : '▶';
+        queue.clear();
 
         return ctx.sendFollowUp({
             embeds: [
-                new Message().createInfo(success ? `${mode} | Updated loop mode!` : 'Could not update loop mode!')
+                new Message().createInfo("Your queue was deleted!")
             ], ephemeral: false
         });
+
+
     }
 }
 
