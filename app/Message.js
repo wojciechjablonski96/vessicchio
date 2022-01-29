@@ -29,29 +29,27 @@ class Message {
             .setDescription(infoMessage)
     }
 
-    createSong(song, type) {
+    createSong(queue, song, type) {
         let msg = new Discord.MessageEmbed()
             .setDescription(song.title)
-            .setAuthor(process.env.NAME)
-            .setFooter(process.env.COPY.toString() + Moment().format('YYYY') + ' | ' + process.env.VERSION.toString())
             .setTimestamp();
 
         if (type === 1) {
             msg.setTitle('Added to queue');
             msg.setColor(process.env.COLOR_SUCCESS);
             msg.addFields([
-                {name: 'Requested by', value: song.requestedBy.username, inline: false},
+                {name: 'Requested by', value: song.requestedBy ? song.requestedBy.username.toString() : 'Not available', inline: false},
+                {name: 'Will be played in', value: queue.connection.channel.name.toString(), inline: false},
             ]);
         } else {
             msg.setTitle('Now playing');
             msg.setThumbnail(song.thumbnail);
             msg.setColor(process.env.COLOR_PRIMARY);
             msg.addFields([
-                {name: 'Channel', value: song.author, inline: true},
-                {name: 'Requested by', value: song.requestedBy.username, inline: true},
-
-                {name: 'Views', value: song.views, inline: true},
-                {name: 'Duration', value: song.duration, inline: true},
+                {name: 'Author', value: song.author ? song.author.toString() : 'Not available', inline: true},
+                {name: 'Requested by', value: song.requestedBy ? song.requestedBy.username.toString() : 'Not available', inline: false},
+                {name: 'Views', value: song.views ? song.views.toString() : 'Not available', inline: true},
+                {name: 'Duration', value: song.duration ? song.duration.toString() : 'Not available', inline: true},
             ]);
         }
         return msg;
