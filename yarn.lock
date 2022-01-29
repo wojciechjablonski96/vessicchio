@@ -1442,9 +1442,9 @@ spotify-uri@~2.2.0:
   integrity sha512-uUybj02bfyfCoZ0MJ80MkqbKxtIVRJfbRGk05KJFq1li3zb7yNfN1f+TAw4wcXgp7jLWExeiw2wyPQXZ8PHtfg==
 
 spotify-url-info@^2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/spotify-url-info/-/spotify-url-info-2.2.3.tgz#2f08400479f00472fb488eff4bd3c485db99361a"
-  integrity sha512-cZTE5nOnaAjIiaHG9psVYqKXWOlNUIgSU2e+bNInRaYZNgmVgOcKH0D7V1nSER3gv3h5BXvOo0EJTtrMQQo1bA==
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/spotify-url-info/-/spotify-url-info-2.2.4.tgz#5cb9c3614bb43e5a8f7068737bd818018393d724"
+  integrity sha512-N863/bYTa4H/VZO1e2jFaLXOEsqvE6q9tm58UNDH72DlHRgs3Uh41JL907mmIlkoyi3SN2i9MmQ9UWD0fpV4QA==
   dependencies:
     cross-fetch "~3.1.4"
     himalaya "~1.1.0"
