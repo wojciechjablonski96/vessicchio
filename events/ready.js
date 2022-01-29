@@ -15,6 +15,6 @@ module.exports = class {
     }
 
     async create(client) {
-        await this.client.user.setActivity('!vessicchio', {type: "LISTENING",});
+        await this.client.user.setActivity("i'm trying slash commands", {type: "LISTENING",});
     }
 }

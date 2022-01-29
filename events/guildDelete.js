@@ -16,7 +16,11 @@ module.exports = class {
     }
 
     async create(guild) {
+       /*
         const oldguild = new Guild(guild);
         oldguild.deleteGuild().catch(e => console.log('GUILD EXIT: ' + e));
+
+
+        */
     }
 }

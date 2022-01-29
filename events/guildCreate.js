@@ -17,7 +17,9 @@ module.exports = class {
     }
 
     async create(guild) {
-        const newguild = new Guild(guild);
+     /*   const newguild = new Guild(guild);
         newguild.newGuild().catch(e => console.log('GUILD JOIN: ' + e));
+
+      */
     }
 }
