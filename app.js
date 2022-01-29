@@ -32,17 +32,7 @@ const client = new Client({
 
 client.logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
 
-client.player = new Player(client, {
-    autoSelfDeaf: false,
-    leaveOnEnd: true,
-    leaveOnStop: false,
-    leaveOnEmpty: true,
-    ytdlOptions: {
-        filter: 'audioonly',
-        quality: 'highestaudio',
-        highWaterMark: 1 << 25
-    }
-});
+client.player = new Player(client);
 
 const creator = new SlashCreator({
     applicationID: process.env.APPLICATION_ID,

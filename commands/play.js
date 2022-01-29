@@ -46,7 +46,7 @@ module.exports = class playCommand extends SlashCommand {
             ], ephemeral: true
         });
 
-        if(bot.voice.channelId && bot.voice.channel.id !== member.voice.channel.id) return ctx.sendFollowUp({
+        if (bot.voice.channelId && bot.voice.channel.id !== member.voice.channel.id) return ctx.sendFollowUp({
             embeds: [
                 new Message().createError("You are not in the same voice channel!")
             ], ephemeral: true
@@ -66,9 +66,24 @@ module.exports = class playCommand extends SlashCommand {
             ], ephemeral: true
         });
 
-        const queue = await client.player.createQueue(guild, {
-            metadata: client.channels.cache.get(ctx.channelID)
-        });
+        const queue = await client.player.createQueue(guild,
+            {
+                metadata: client.channels.cache.get(ctx.channelID),
+                autoSelfDeaf: false,
+                leaveOnEnd: true,
+                leaveOnStop: false,
+                leaveOnEmpty: true,
+                ytdlOptions: {
+                    requestOptions: {
+                        headers: {
+                            cookie: ""
+                        }
+                    },
+                    filter: 'audioonly',
+                    quality: 'highestaudio',
+                    highWaterMark: 1 << 25
+                }
+            });
 
         try {
             if (!queue.connection) await queue.connect(member.voice.channel);
