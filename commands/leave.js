@@ -46,7 +46,7 @@ module.exports = class leaveCommand extends SlashCommand {
         return ctx.sendFollowUp({
             embeds: [
                 new Message().createInfo("Bot has been stopped!")
-            ], ephemeral: true
+            ], ephemeral: false
         });
     }
 }
