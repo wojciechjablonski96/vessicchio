@@ -17,7 +17,7 @@ module.exports = class PingCommand extends SlashCommand {
     constructor(creator) {
         super(creator, {
             name: 'ping',
-            description: 'Mostra il ping del web socket.',
+            description: 'Shows webservice ping.',
         });
 
         this.filePath = __filename;
@@ -27,7 +27,7 @@ module.exports = class PingCommand extends SlashCommand {
         const {client} = require('..');
         return {
             embeds: [
-                new Message().createInfo(`Latenza del client BOT: ${client.ws.ping}ms`)
+                new Message().createInfo(`Webservice ping: ${client.ws.ping}ms`)
             ], ephemeral: false
         }
     }
