@@ -85,7 +85,7 @@ for (const file of events) {
 
 const player = fs.readdirSync('./events/player').filter(file => file.endsWith('.js'));
 for (const file of player) {
-    logger.info(`Loaded event ${file}`);
+    logger.info(`Loaded player event ${file}`);
     const eventName = file.split(".")[0];
     const event = new (require(`./events/player/${file}`))(client);
     client.player.on(eventName, (...args) => event.create(...args));
