@@ -1,22 +1,37 @@
-/* Copyright (C) Wojciech Jablonski - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- * Written by Wojciech Jablonski <info@wojciechjablonski.com>, April 2021
+/*
+ * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
+ *
+ * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Wojciech Jablonski <info@wojciechjablonski.com>.
  */
 
-//---------- IMPORTS ----------
-
-//main
-const dotenv = require("dotenv").config();
-const Discord = require('discord.js');
+/* Libraries */
+const {Client, Intents} = require('discord.js');
+const dotenv = require("dotenv");
+const {SlashCreator, GatewayServer} = require('slash-create');
 const {Player} = require('discord-player');
+const path = require('path');
 const fs = require('fs');
 
-//Creating discord client
-const DiscordClient = new Discord.Client();
+/* Client Inizialization */
+dotenv.config();
 
+const CatLoggr = require('cat-loggr');
+const logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
 
-DiscordClient.player = new Player(DiscordClient, {
+const client = new Client({
+    intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.GUILD_VOICE_STATES
+    ]
+});
+
+client.player = new Player(client, {
     leaveOnEnd: true,
     leaveOnEndCooldown: 300000,
     leaveOnStop: false,
@@ -27,32 +42,59 @@ DiscordClient.player = new Player(DiscordClient, {
     ytdlDownloadOptions: {}
 });
 
-DiscordClient.commands = new Discord.Collection();
+const creator = new SlashCreator({
+    applicationID: process.env.APPLICATION_ID,
+    publicKey: process.env.PUBLIC_KEY,
+    token: process.env.TOKEN,
+});
 
+creator.on('debug', (message) => logger.log(message));
+creator.on('warn', (message) => logger.warn(message));
+creator.on('error', (error) => logger.error(error));
+creator.on('synced', () => logger.info('Slash commands synced!'));
 
-const commands = fs.readdirSync(`./commands/`).filter(files => files.endsWith('.js'));
+creator.on('commandRun', (command, _, ctx) =>
+    logger.info(`${ctx.user.username}#${ctx.user.discriminator} (${ctx.user.id}) ran command ${command.commandName}`));
+creator.on('commandRegister', (command) =>
+    logger.info(`Registered command ${command.commandName}`));
+creator.on('commandError', (command, error) => logger.error(`Command ${command.commandName}:`, error));
 
-for (const file of commands) {
-    const command = require(`./commands/${file}`);
-    console.log(`[BOOT] Loaded COMMAND:  ${file}`);
-    DiscordClient.commands.set(command.cmd.toLowerCase(), command);
-}
+creator
+    .withServer(
+        new GatewayServer(
+            (handler) => client.ws.on('INTERACTION_CREATE', handler)
+        )
+    )
+    .registerCommandsIn(path.join(__dirname, 'commands'))
+    .syncCommands({
+        syncPermissions: true
+    });
 
 
 const events = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 for (const file of events) {
-    console.log(`[BOOT] Loaded MAIN-EVENT: ${file}`);
-    const event = require(`./events/${file}`);
-    event.use(DiscordClient).catch(e => {
-        console.log(e);
-    });
+    logger.info(`Loaded event ${file}`);
+    const eventName = file.split(".")[0];
+    const event = new (require(`./events/${file}`))(client);
+    client.on(eventName, (...args) => event.create(...args));
+    delete require.cache[require.resolve(`./events/${file}`)];
+
 }
+
+
 
 const player = fs.readdirSync('./events/player').filter(file => file.endsWith('.js'));
 for (const file of player) {
-    console.log(`[BOOT] Loaded SUB-EVENT: discord-player-${file}`);
-    const event = require(`./events/player/${file}`);
-    DiscordClient.player.on(file.split(".")[0], event.bind(null, DiscordClient));
+    logger.info(`Loaded event ${file}`);
+    const eventName = file.split(".")[0];
+    const event = new (require(`./events/player/${file}`))(client);
+    client.player.on(eventName, (...args) => event.create(...args));
+    delete require.cache[require.resolve(`./events/player/${file}`)];
+
 }
 
-DiscordClient.login(process.env.TOKEN);
+client.login(process.env.TOKEN);
+
+module.exports = {
+    client,
+};
