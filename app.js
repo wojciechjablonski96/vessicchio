@@ -21,7 +21,6 @@ const fs = require('fs');
 dotenv.config();
 
 const CatLoggr = require('cat-loggr');
-const logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
 
 const client = new Client({
     intents: [
@@ -31,15 +30,18 @@ const client = new Client({
     ]
 });
 
+client.logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
+
 client.player = new Player(client, {
+    autoSelfDeaf: false,
     leaveOnEnd: true,
-    leaveOnEndCooldown: 300000,
     leaveOnStop: false,
     leaveOnEmpty: true,
-    leaveOnEmptyCooldown: 0,
-    autoSelfDeaf: false,
-    enableLive: false,
-    ytdlDownloadOptions: {}
+    ytdlOptions: {
+        filter: 'audioonly',
+        quality: 'highestaudio',
+        highWaterMark: 1 << 25
+    }
 });
 
 const creator = new SlashCreator({
@@ -48,16 +50,16 @@ const creator = new SlashCreator({
     token: process.env.TOKEN,
 });
 
-creator.on('debug', (message) => logger.log(message));
-creator.on('warn', (message) => logger.warn(message));
-creator.on('error', (error) => logger.error(error));
-creator.on('synced', () => logger.info('Slash commands synced!'));
+creator.on('debug', (message) => client.logger.log(message));
+creator.on('warn', (message) => client.logger.warn(message));
+creator.on('error', (error) => client.logger.error(error));
+creator.on('synced', () => client.logger.info('Slash commands synced!'));
 
 creator.on('commandRun', (command, _, ctx) =>
-    logger.info(`${ctx.user.username}#${ctx.user.discriminator} (${ctx.user.id}) ran command ${command.commandName}`));
+    client.logger.info(`${ctx.user.username}#${ctx.user.discriminator} (${ctx.user.id}) ran command ${command.commandName}`));
 creator.on('commandRegister', (command) =>
-    logger.info(`Registered command ${command.commandName}`));
-creator.on('commandError', (command, error) => logger.error(`Command ${command.commandName}:`, error));
+    client.logger.info(`Registered command ${command.commandName}`));
+creator.on('commandError', (command, error) => client.logger.error(`Command ${command.commandName}:`, error));
 
 creator
     .withServer(
@@ -70,10 +72,9 @@ creator
         syncPermissions: true
     });
 
-
 const events = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 for (const file of events) {
-    logger.info(`Loaded event ${file}`);
+    client.logger.info(`Loaded event ${file}`);
     const eventName = file.split(".")[0];
     const event = new (require(`./events/${file}`))(client);
     client.on(eventName, (...args) => event.create(...args));
@@ -81,11 +82,9 @@ for (const file of events) {
 
 }
 
-
-
 const player = fs.readdirSync('./events/player').filter(file => file.endsWith('.js'));
 for (const file of player) {
-    logger.info(`Loaded player event ${file}`);
+    client.logger.info(`Loaded player event ${file}`);
     const eventName = file.split(".")[0];
     const event = new (require(`./events/player/${file}`))(client);
     client.player.on(eventName, (...args) => event.create(...args));
@@ -96,5 +95,5 @@ for (const file of player) {
 client.login(process.env.TOKEN);
 
 module.exports = {
-    client,
+    client
 };
