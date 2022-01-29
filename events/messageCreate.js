@@ -14,7 +14,8 @@ module.exports = class {
         this.client = client;
     }
 
-    async create(client) {
-        await this.client.user.setActivity("i'm trying slash commands", {type: "LISTENING",});
+    async create(message) {
+
+        //Nothing
     }
 }

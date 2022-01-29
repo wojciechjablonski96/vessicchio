@@ -236,11 +236,16 @@ class Guild {
                 .where({id: that.guild.id})
                 .then(rows => {
                     return resolve(rows[0]);
-                })
+                }).catch(e => {
+                    return reject(e);
+                }).finally(() => {
+                    //TODO
+                });
         });
     }
 
     async newGuild() {
+
         let admins = Array();
         await this.guild.roles.cache.forEach(role => {
             if (role.permissions.has('ADMINISTRATOR')) {
