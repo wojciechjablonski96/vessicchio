@@ -10,7 +10,6 @@
  */
 
 const Discord = require('discord.js');
-const Moment = require('moment');
 
 class Message {
     constructor() {
