@@ -15,6 +15,9 @@ module.exports = class {
     }
 
     async create() {
-        await this.client.user.setActivity("i'm trying slash commands", {type: "LISTENING",});
+        await this.client.user.setActivity("i'm trying slash commands on " + this.client.guilds.cache.size + " servers", {type: "LISTENING",});
+        setInterval(async () => {
+            await this.client.user.setActivity("i'm trying slash commands on " + this.client.guilds.cache.size + " servers", {type: "LISTENING",});
+        },300000);
     }
 }
