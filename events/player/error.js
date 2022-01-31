@@ -16,6 +16,9 @@ module.exports = class {
     }
 
     async create(queue,error) {
-        this.client.logger.error(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`)
+        console.log(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
+        /*this.client.logger.error(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`)
+
+         */
     }
 }
