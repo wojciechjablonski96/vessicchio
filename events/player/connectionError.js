@@ -17,5 +17,6 @@ module.exports = class {
 
     async create(queue,error) {
         console.log(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
+        queue.metadata.send({ embeds: [new Message().createError(`Error emitted from the connection: ${error.message}`)]});
     }
 }
