@@ -15,10 +15,11 @@ module.exports = class {
         this.client = client;
     }
 
-    async create(queue,error) {
+    async create(queue, error) {
         console.log(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
-        /*this.client.logger.error(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`)
-
-         */
+        queue.metadata.send({embeds: [new Message().createError(`Error emitted from the queue: ${error.message}`)]});
+        if (queue) {
+            if (!queue.playing) await queue.play();
+        }
     }
 }
