@@ -22,7 +22,7 @@ module.exports = class {
             const totalMembers = this.client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0);
             this.client.user.setActivity(queues + ' songs in ' + servers + " servers with " + totalMembers + " users.", {type: "LISTENING"});
         }, 300000);
-        
+
          */
     }
 }
