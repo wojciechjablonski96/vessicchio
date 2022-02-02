@@ -126,9 +126,9 @@
     form-data "^3.0.0"
 
 "@types/node@*":
-  version "17.0.13"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.13.tgz#5ed7ed7c662948335fcad6c412bb42d99ea754e3"
-  integrity sha512-Y86MAxASe25hNzlDbsviXl8jQHb0RDvKt4c40ZJQ1Don0AAL0STLZSs4N+6gLEO55pedy7r2cLwS+ZDxPm/2Bw==
+  version "17.0.14"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.14.tgz#33b9b94f789a8fedd30a68efdbca4dbb06b61f20"
+  integrity sha512-SbjLmERksKOGzWzPNuW7fJM7fk3YXVTFiZWB/Hs99gwhk+/dnrQRPBQjPW9aO+fi1tAffi9PrwFvsmOKmDTyng==
 
 "@types/node@^10.0.3":
   version "10.17.60"
@@ -490,16 +490,16 @@ discord-api-types@^0.26.0, discord-api-types@^0.26.1:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.26.1.tgz#726f766ddc37d60da95740991d22cb6ef2ed787b"
   integrity sha512-T5PdMQ+Y1MEECYMV5wmyi9VEYPagEDEi4S0amgsszpWY0VB9JJ/hEvM6BgLhbdnKky4gfmZEXtEEtojN8ZKJQQ==
 
-discord-player@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/discord-player/-/discord-player-5.2.1.tgz#508f9d8fc6acd076fa61869fb4fc0295b7f8d20a"
-  integrity sha512-6/F0GWJn4KHaAvky1zj6lmUYt1HaBC/dmVaPAXbQNbUq0jVjzMKdPB07P21kMw2R02jNOQfb4H+isRV4KL+CSQ==
+discord-player@^5.2.2:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/discord-player/-/discord-player-5.2.2.tgz#ecc2396b787e78dea01006def14ed9280d6702ff"
+  integrity sha512-YtGGRNv2597rwzoR4UQPEaa1BNNspxvxl0qli34Jj8ZKYqlS2n5FXFChmYIw9dd/7vI5I+e78BSD7nQcPcFUJw==
   dependencies:
     "@discordjs/voice" "^0.8.0"
     discord-ytdl-core "^5.0.4"
     libsodium-wrappers "^0.7.9"
     soundcloud-scraper "^5.0.2"
-    spotify-url-info "^2.2.3"
+    spotify-url-info "^2.2.5"
     tiny-typed-emitter "^2.1.0"
     youtube-sr "^4.1.13"
     ytdl-core "^4.10.0"
@@ -563,10 +563,10 @@ domutils@^2.5.2, domutils@^2.7.0, domutils@^2.8.0:
     domelementtype "^2.2.0"
     domhandler "^4.2.0"
 
-dotenv@^14.3.2:
-  version "14.3.2"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-14.3.2.tgz#7c30b3a5f777c79a3429cb2db358eef6751e8369"
-  integrity sha512-vwEppIphpFdvaMCaHfCEv9IgwcxMljMw2TnAQBB4VWPvzXQLTb82jwmdOKzlEVUL3gNFT4l4TPKO+Bn+sqcrVQ==
+dotenv@^15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-15.0.0.tgz#2a585639429bf2c2c62f387f0fffde9c75aafde0"
+  integrity sha512-/l1sXXm79ry34KwwS0y4oVZjB468iw/6u9g1W26dtexKcIJAnVL2pMF+hxQwzZ7LutxOwEgtym9eIxvX33CMKg==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -942,16 +942,16 @@ json-buffer@3.0.1:
   integrity sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==
 
 keyv@^4.0.0:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/keyv/-/keyv-4.0.5.tgz#bb12b467aba372fab2a44d4420c00d3c4ebd484c"
-  integrity sha512-531pkGLqV3BMg0eDqqJFI0R1mkK1Nm5xIP2mM6keP5P8WfFtCkg2IOwplTUmlGoTgIg9yQYZ/kdihhz89XH3vA==
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/keyv/-/keyv-4.1.0.tgz#8ab5ca4ae6a34e05c629531d9a7f871575af0d5b"
+  integrity sha512-YsY3wr6HabE11/sscee+3nZ03XjvkrPWGouAmJFBdZoK92wiOlJCzI5/sDEIKdJhdhHO144ei45U9gXfbu14Uw==
   dependencies:
     json-buffer "3.0.1"
 
-knex@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/knex/-/knex-1.0.1.tgz#0916dc2b79375cd15bfbf0d70bf3c5ef5f411a33"
-  integrity sha512-pusgMo74lEbUxmri+YfWV8x/LJacP/2KcemTCKH7WnXFYz5RoMi+8WM4OJ05b0glfF+aWB4nkFsxsXxJ8qioLQ==
+knex@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/knex/-/knex-1.0.2.tgz#1b79273f39f587a631c1a5515482c203d5971781"
+  integrity sha512-RuDKTylj6X/3nYomnsFV8sOdxTcehLHczOd3yrUdULE4pQR8jVlZxYt3vvIU04otJF0Cw9DCtRt05S4PN4kDpw==
   dependencies:
     colorette "2.0.16"
     commander "^8.3.0"
@@ -1441,10 +1441,10 @@ spotify-uri@~2.2.0:
   resolved "https://registry.yarnpkg.com/spotify-uri/-/spotify-uri-2.2.0.tgz#8db641615cf6e122284874287fe39e89595922df"
   integrity sha512-uUybj02bfyfCoZ0MJ80MkqbKxtIVRJfbRGk05KJFq1li3zb7yNfN1f+TAw4wcXgp7jLWExeiw2wyPQXZ8PHtfg==
 
-spotify-url-info@^2.2.3:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/spotify-url-info/-/spotify-url-info-2.2.4.tgz#5cb9c3614bb43e5a8f7068737bd818018393d724"
-  integrity sha512-N863/bYTa4H/VZO1e2jFaLXOEsqvE6q9tm58UNDH72DlHRgs3Uh41JL907mmIlkoyi3SN2i9MmQ9UWD0fpV4QA==
+spotify-url-info@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/spotify-url-info/-/spotify-url-info-2.2.5.tgz#d3a63af3c095e86c036e19d9d5b39b69107b7198"
+  integrity sha512-KEGZoSbaHivmyLAPjucVa7MVeX2azTh3oNHG7r0h/Jp8gjHmh9N8eHjgFx1wxXWKuHV3loOXAZ6EKyxZzcDPSg==
   dependencies:
     cross-fetch "~3.1.4"
     himalaya "~1.1.0"
