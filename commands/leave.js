@@ -12,6 +12,7 @@
 const {SlashCommand} = require('slash-create');
 
 const Message = require('../app/Message');
+const {client} = require("../app");
 
 module.exports = class leaveCommand extends SlashCommand {
     constructor(creator) {
@@ -47,6 +48,9 @@ module.exports = class leaveCommand extends SlashCommand {
                 new Message().createError("The bot is not in a voice channel!")
             ], ephemeral: true
         });
+
+        const queue = client.player.getQueue(ctx.guildID);
+        if (queue) await queue.destroy();
 
         await bot.voice.disconnect();
 
