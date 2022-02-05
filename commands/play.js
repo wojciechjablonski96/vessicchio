@@ -13,6 +13,7 @@ const {SlashCommand, CommandOptionType} = require('slash-create');
 
 const Message = require('../app/Message');
 const {QueryType} = require("discord-player");
+const playdl = require("play-dl");
 
 module.exports = class playCommand extends SlashCommand {
     constructor(creator) {
@@ -32,7 +33,6 @@ module.exports = class playCommand extends SlashCommand {
     }
 
     async run(ctx) {
-
         const {client} = require('..');
         const guild = client.guilds.cache.get(ctx.guildID);
         const member = guild.members.cache.get(ctx.user.id) ?? await guild.members.fetch(ctx.user.id);
@@ -65,7 +65,6 @@ module.exports = class playCommand extends SlashCommand {
                 new Message().createError("No results were found!")
             ], ephemeral: true
         });
-
         const queue = await client.player.createQueue(guild,
             {
                 metadata: client.channels.cache.get(ctx.channelID),
@@ -82,6 +81,9 @@ module.exports = class playCommand extends SlashCommand {
                     filter: 'audioonly',
                     quality: 'highestaudio',
                     highWaterMark: 1 << 25
+                },
+                async onBeforeCreateStream(track, source, _queue){
+                    return (await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url), { discordPlayerCompatibility : true })).stream;
                 }
             });
 
