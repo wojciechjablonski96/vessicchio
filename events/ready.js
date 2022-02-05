@@ -15,14 +15,9 @@ module.exports = class {
     }
 
     async create() {
-        /*
+        this.client.user.setActivity(this.client.guilds.cache.size + " guilds.", {type: "LISTENING"});
         setInterval(() => {
-            const queues = this.client.player.queues.size;
-            const servers = this.client.guilds.cache.size;
-            const totalMembers = this.client.guilds.cache.map(guild => guild.memberCount).reduce((a, b) => a + b, 0);
-            this.client.user.setActivity(queues + ' songs in ' + servers + " servers with " + totalMembers + " users.", {type: "LISTENING"});
+            this.client.user.setActivity(this.client.guilds.cache.size + " guilds.", {type: "LISTENING"});
         }, 300000);
-
-         */
     }
 }
