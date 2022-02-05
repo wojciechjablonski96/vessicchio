@@ -12,7 +12,6 @@
 const {SlashCommand} = require('slash-create');
 
 const Message = require('../app/Message');
-const {client} = require("../app");
 
 module.exports = class leaveCommand extends SlashCommand {
     constructor(creator) {
