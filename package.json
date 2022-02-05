@@ -19,6 +19,8 @@
     "moment": "^2.29.1",
     "mysql2": "^2.3.3",
     "path": "^0.12.7",
-    "slash-create": "^5.0.3"
+    "play-dl": "^1.8.6",
+    "slash-create": "^5.0.3",
+    "ytdl-core": "^4.10.1"
   }
 }
