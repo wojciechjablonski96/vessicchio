@@ -63,7 +63,7 @@ module.exports = class loopCommand extends SlashCommand {
             ], ephemeral: true
         });
 
-        if(bot.voice.channelId && bot.voice.channel.id !== member.voice.channel.id) return ctx.sendFollowUp({
+        if (bot.voice.channelId && bot.voice.channel.id !== member.voice.channel.id) return ctx.sendFollowUp({
             embeds: [
                 new Message().createError("You are not in the same voice channel!")
             ], ephemeral: true

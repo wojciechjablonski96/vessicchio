@@ -34,9 +34,9 @@ module.exports = class clearCommand extends SlashCommand {
             embeds: [
                 new Message().createError("You are not in a voice channel!")
             ], ephemeral: true
-        })
+        });
 
-        if(bot.voice.channelId && bot.voice.channel.id !== member.voice.channel.id) return ctx.sendFollowUp({
+        if (bot.voice.channelId && bot.voice.channel.id !== member.voice.channel.id) return ctx.sendFollowUp({
             embeds: [
                 new Message().createError("You are not in the same voice channel!")
             ], ephemeral: true
