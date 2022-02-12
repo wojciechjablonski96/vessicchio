@@ -16,12 +16,12 @@ module.exports = class {
     }
 
     async create(oldState, newState) {
-        if (!newState.channelId) {
+       /* if (!newState.channelId) {
             const queue = this.client.player.getQueue(newState.guild.id);
             if (queue) {
                 await queue.metadata.send({embeds: [new Message().createInfo("The bot was disconnected from your voice channel, the queue was deleted.")]});
                 await queue.destroy();
             }
-        }
+        }*/
     }
 }
