@@ -9,15 +9,19 @@
  * Wojciech Jablonski <info@wojciechjablonski.com>.
  */
 
+const Message = require("../app/Message");
 module.exports = class {
     constructor(client) {
         this.client = client;
     }
 
-    async create(oldState,newState) {
-        if(!newState.channelId){
+    async create(oldState, newState) {
+        if (!newState.channelId) {
             const queue = this.client.player.getQueue(newState.guild.id);
-            if(queue)await queue.destroy();
+            if (queue) {
+                await queue.metadata.send({embeds: [new Message().createInfo("The bot was disconnected from your voice channel, the queue was deleted.")]});
+                await queue.destroy();
+            }
         }
     }
 }
