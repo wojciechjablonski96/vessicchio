@@ -52,19 +52,21 @@ module.exports = class playCommand extends SlashCommand {
             ], ephemeral: true
         });
 
-        const query = ctx.options.query;
         const searchResult = await client.player
-            .search(query, {
-                requestedBy: ctx.user,
-                searchEngine: ctx.commandName === "soundcloud" ? QueryType.SOUNDCLOUD_SEARCH : QueryType.AUTO
+            .search(ctx.options.query, {
+                searchEngine: ctx.commandName === "soundcloud" ? QueryType.SOUNDCLOUD_SEARCH : QueryType.AUTO,
+                requestedBy: ctx.user
             })
-            .catch(() => {
+            .catch((e) => {
+                console.log(e);
             });
+
         if (!searchResult || !searchResult.tracks.length) return ctx.sendFollowUp({
             embeds: [
                 new Message().createError("No results were found!")
             ], ephemeral: true
         });
+
         const queue = await client.player.createQueue(guild,
             {
                 metadata: client.channels.cache.get(ctx.channelID),
@@ -82,8 +84,11 @@ module.exports = class playCommand extends SlashCommand {
                     quality: 'highestaudio',
                     highWaterMark: 1 << 25
                 },
-                async onBeforeCreateStream(track, source, _queue){
-                    return (await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url), { discordPlayerCompatibility : true })).stream;
+                async onBeforeCreateStream(track, source, _queue) {
+                    return (await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, {
+                        limit: 1,
+                        source: {youtube: "video"}
+                    }).then(x => x[0].url), {discordPlayerCompatibility: true})).stream;
                 }
             });
 

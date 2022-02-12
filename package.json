@@ -1,6 +1,6 @@
 {
   "name": "vessicchio",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A completely free music bot",
   "main": "app.js",
   "repository": "https://github.com/wojciechjablonski96/vessicchio.git",
@@ -12,15 +12,15 @@
     "cat-loggr": "^1.2.2",
     "discord-player": "^5.2.2",
     "discord.js": "^13.6.0",
-    "dotenv": "^15.0.0",
+    "dotenv": "^16.0.0",
     "ffmpeg-static": "^4.4.1",
     "fs": "^0.0.1-security",
-    "knex": "^1.0.2",
+    "knex": "^1.0.3",
     "moment": "^2.29.1",
     "mysql2": "^2.3.3",
     "path": "^0.12.7",
-    "play-dl": "^1.8.6",
-    "slash-create": "^5.0.3",
+    "play-dl": "^1.8.8",
+    "slash-create": "^5.2.1",
     "ytdl-core": "^4.10.1"
   }
 }
