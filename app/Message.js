@@ -37,18 +37,36 @@ class Message {
             msg.setTitle('Added to queue');
             msg.setColor(process.env.COLOR_SUCCESS);
             msg.addFields([
-                {name: 'Requested by', value: song.requestedBy ? song.requestedBy.username.toString() : 'Not available', inline: false},
+                {
+                    name: 'Requested by',
+                    value: song.requestedBy ? song.requestedBy.username.toString() : 'Not available',
+                    inline: false
+                },
                 {name: 'Will be played in', value: queue.connection.channel.name.toString(), inline: false},
             ]);
-        } else {
+        } else if (type === 0) {
             msg.setTitle('Now playing');
             msg.setThumbnail(song.thumbnail);
             msg.setColor(process.env.COLOR_PRIMARY);
             msg.addFields([
                 {name: 'Author', value: song.author ? song.author.toString() : 'Not available', inline: true},
-                {name: 'Requested by', value: song.requestedBy ? song.requestedBy.username.toString() : 'Not available', inline: false},
+                {
+                    name: 'Requested by',
+                    value: song.requestedBy ? song.requestedBy.username.toString() : 'Not available',
+                    inline: false
+                },
                 {name: 'Views', value: song.views ? song.views.toString() : 'Not available', inline: true},
                 {name: 'Duration', value: song.duration ? song.duration.toString() : 'Not available', inline: true},
+            ]);
+        } else if (type === 3) {
+            const progress = queue.createProgressBar();
+            msg.setTitle('Seeking song');
+            msg.setColor(process.env.COLOR_PRIMARY);
+            msg.addFields([
+                {
+                    name: '\u200b',
+                    value: progress.replace(/ 0:00/g, ' ◉ LIVE')
+                }
             ]);
         }
         return msg;
