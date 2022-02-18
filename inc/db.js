@@ -1,7 +1,12 @@
-/* Copyright (C) Wojciech Jablonski - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- * Written by Wojciech Jablonski <info@wojciechjablonski.com>, 2021
+/*
+ * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
+ *
+ * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Wojciech Jablonski <info@wojciechjablonski.com>.
  */
 
 var database = require('knex')({

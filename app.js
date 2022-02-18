@@ -45,8 +45,9 @@ creator.on('warn', (message) => client.logger.warn(message));
 creator.on('error', (error) => client.logger.error(error));
 creator.on('synced', () => client.logger.info('Slash commands synced!'));
 
-creator.on('commandRun', (command, _, ctx) =>
-    client.logger.info(`${ctx.user.username}#${ctx.user.discriminator} (${ctx.user.id}) ran command ${command.commandName}`));
+creator.on('commandRun', (command, _, ctx) => {
+    client.logger.info(`[${client.guilds.cache.get(ctx.guildID).name} (${ctx.guildID})] ${ctx.user.username}#${ctx.user.discriminator} (${ctx.user.id}) ran command ${command.commandName}`)
+});
 creator.on('commandRegister', (command) =>
     client.logger.info(`Registered command ${command.commandName}`));
 creator.on('commandError', (command, error) => client.logger.error(`Command ${command.commandName}:`, error));

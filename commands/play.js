@@ -95,7 +95,7 @@ module.exports = class playCommand extends SlashCommand {
         try {
             if (!queue.connection) await queue.connect(member.voice.channel);
         } catch {
-            void client.player.deleteQueue(ctx.guildID);
+            await client.player.deleteQueue(ctx.guildID);
             return ctx.sendFollowUp({
                 embeds: [
                     new Message().createInfo("Could not join your voice channel!")
