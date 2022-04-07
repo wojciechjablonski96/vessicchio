@@ -72,7 +72,7 @@ module.exports = class playCommand extends SlashCommand {
                 metadata: client.channels.cache.get(ctx.channelID),
                 autoSelfDeaf: false,
                 leaveOnEnd: true,
-                leaveOnStop: false,
+                leaveOnStop: true,
                 leaveOnEmpty: true,
                 ytdlOptions: {
                     requestOptions: {
