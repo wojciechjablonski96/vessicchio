@@ -43,7 +43,7 @@ module.exports = {
     production: {
         client: 'mysql2',
         connection: {
-            host: process.env.MYSQL_HOST,
+            socketPath : process.env.MYSQL_SOCKET,
             user: process.env.MYSQL_USER,
             password: process.env.MYSQL_DB,
             database: process.env.MYSQL_PASSWORD
