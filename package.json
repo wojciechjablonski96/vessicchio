@@ -15,11 +15,11 @@
     "dotenv": "^16.0.0",
     "ffmpeg-static": "^5.0.0",
     "fs": "^0.0.1-security",
-    "knex": "^1.0.7",
-    "moment": "^2.29.2",
+    "knex": "^2.0.0",
+    "moment": "^2.29.3",
     "mysql2": "^2.3.3",
     "path": "^0.12.7",
     "play-dl": "^1.9.4",
-    "slash-create": "^5.4.1"
+    "slash-create": "^5.5.3"
   }
 }
