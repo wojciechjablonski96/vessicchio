@@ -25,5 +25,4 @@ jobs:
             cd ~/vessicchio
             git pull origin master
             yarn install --production
-            yarn knex migrate:latest
             pm2 restart VESSICCHIO
