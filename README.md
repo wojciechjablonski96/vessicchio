@@ -23,7 +23,7 @@ Vessicchio requires [Node.js](https://nodejs.org/) v16.* LTS + to run.
 Install the dependencies and run your instance.
 
 ```sh
-git clone https://github.com/wojciechjablonski96/lsli-bot.git
+git clone https://github.com/wojciechjablonski96/vessicchio
 cd vessicchio
 cp .env.example .env
 yarn install
