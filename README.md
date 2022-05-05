@@ -16,7 +16,13 @@ A music bot written using <a href="https://www.npmjs.com/package/discord.js">dis
 
 <hr>
 
-## Manual installation
+## Add this (hosted) bot to your discord server
+
+<a href="https://discord.com/api/oauth2/authorize?client_id=763015631540584459&permissions=8&scope=bot">Click Here</a>
+
+<hr>
+
+## Manual self-hosted installation
 
 Vessicchio requires [Node.js](https://nodejs.org/) v16.* LTS + to run.
 
