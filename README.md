@@ -1,10 +1,24 @@
-# Vessicchio - "it's not just a music bot"
+<div align="center">
+  <p>
+    <img src="https://i.imgur.com/86bFusY.png" width="100" alt="Vessicchio Logo" /></a>
+<br>
+<h3>Vessicchio Music BOT</h3>
+A music bot written using <a href="https://www.npmjs.com/package/discord.js">discord.js</a> with <a href="https://www.npmjs.com/package/slash-create">slash-create</a> commands. 
+<br>Based on <a href="https://www.npmjs.com/package/discord-player">discord-player </a> framework.
+  </p>
+<hr>
+<a href="https://github.com/wojciechjablonski96/vessicchio/commits/master"><img src="https://img.shields.io/github/last-commit/wojciechjablonski96/vessicchio/?color=44b868&logo=GitHub&logoColor=white&style=flat-square" alt="last commit"></a> 
+<a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/github/package-json/dependency-version/wojciechjablonski96/vessicchio/discord.js?color=44b868&logo=npm&style=flat-square"></a>
+<a href="https://www.npmjs.com/package/discord-player"><img src="https://img.shields.io/github/package-json/dependency-version/wojciechjablonski96/vessicchio/discord-player?color=44b868&logo=npm&style=flat-square"></a>
+<a href="https://www.npmjs.com/package/slash-create"><img src="https://img.shields.io/github/package-json/dependency-version/wojciechjablonski96/vessicchio/slash-create?color=44b868&logo=npm&style=flat-square"></a>
+<a href="https://www.codefactor.io/repository/github/wojciechjablonski96/vessicchio"><img src="https://www.codefactor.io/repository/github/wojciechjablonski96/vessicchio/badge?s=cf93e39c12b7a91e0c32dc1c5109b82d58da5674" alt="CodeFactor" /></a>
+</div>
 
-[![CodeFactor](https://www.codefactor.io/repository/github/wojciechjablonski96/vessicchio/badge?s=cf93e39c12b7a91e0c32dc1c5109b82d58da5674)](https://www.codefactor.io/repository/github/wojciechjablonski96/vessicchio)
+<hr>
 
-## Installation
+## Manual installation
 
-LSLI BOT requires [Node.js](https://nodejs.org/) v14.16.0 LTS + to run.
+Vessicchio requires [Node.js](https://nodejs.org/) v16.* LTS + to run.
 
 Install the dependencies and run your instance.
 
@@ -16,27 +30,28 @@ yarn install
 node app.js
 ```
 
-## MODULES
+<hr>
 
-- ### Music
-  Music module works like a simple music bot. 
-  - !play / !p
-  - !pause /!ps
-  - !resume / !rs
-  - !stop / !s
-  - !skip / !sk
-  - !leave / !lv
-- ### Personal channels
-  //TODO
-- ### Tickets Managment
-  //TODO
-- ### Ranking System
-  //TODO
-## Author
+## COMMANDS
 
-**Wojciech Jablonski <info@wojciechjablonski.com>**
-
-* Website: [https://wojciechjablonski.com](https://wojciechjablonski.com)
-
+- ### Music commands
+    - /play
+    - /stop
+    - /pause
+    - /resume
+    - /clear
+    - /jump
+    - /leave
+    - /loop
+    - /ping
+    - /previous
+    - /queue
+    - /remove
+    - /seek
+    - /shuffle
+    - /skip
+    - /top
+    
 [//]: #
+
 [NodeJS]: <https://nodejs.org/>
