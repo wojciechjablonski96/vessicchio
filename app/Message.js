@@ -17,19 +17,19 @@ class Message {
     }
 
     createError(errorMessage) {
-        return new Discord.MessageEmbed()
+        return new Discord.EmbedBuilder()
             .setColor(process.env.COLOR_ERROR)
             .setDescription(errorMessage);
     }
 
     createInfo(infoMessage) {
-        return new Discord.MessageEmbed()
+        return new Discord.EmbedBuilder()
             .setColor(process.env.COLOR_INFO)
             .setDescription(infoMessage)
     }
 
     createSong(queue, song, type) {
-        let msg = new Discord.MessageEmbed()
+        let msg = new Discord.EmbedBuilder()
             .setDescription(song.title)
             .setTimestamp();
 
