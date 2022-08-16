@@ -10,7 +10,7 @@
  */
 
 /* Libraries */
-const {Client, Intents} = require('discord.js');
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const dotenv = require("dotenv");
 const {SlashCreator, GatewayServer} = require('slash-create');
 const {Player} = require('discord-player');
@@ -24,11 +24,12 @@ const CatLoggr = require('cat-loggr');
 
 const client = new Client({
     intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_VOICE_STATES
-    ]
-});
+        GatewayIntentBits.Guilds,
+        'GuildVoiceStates'
+    ],
+    partials: [
+        Partials.Channel,
+        Partials.Message] });
 
 client.logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
 
