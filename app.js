@@ -24,12 +24,9 @@ const CatLoggr = require('cat-loggr');
 
 const client = new Client({
     intents: [
-        GatewayIntentBits.Guilds,
+        'Guilds',
         'GuildVoiceStates'
-    ],
-    partials: [
-        Partials.Channel,
-        Partials.Message] });
+    ]});
 
 client.logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
 
