@@ -23,7 +23,24 @@ dotenv.config();
 const CatLoggr = require('cat-loggr');
 
 const client = new Client({
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]
+    intents: [
+        GatewayIntentBits.Guilds, 
+        GatewayIntentBits.GuildVoiceStates, 
+        GatewayIntentBits.GuildMembers, 
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.DirectMessageReactions,
+        GatewayIntentBits.GuildBans,
+        GatewayIntentBits.GuildInvites,
+        GatewayIntentBits.GuildMessageTyping,
+        GatewayIntentBits.DirectMessageTyping,
+        GatewayIntentBits.GuildEmojisAndStickers,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.GuildIntegrations,
+        GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.GuildPresences,
+        GatewayIntentBits.GuildWebhooks
+    ]
 });
 
 client.logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
