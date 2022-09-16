@@ -25,7 +25,7 @@ class Message {
     createInfo(infoMessage) {
         return this.msg
             .setColor(process.env.COLOR_INFO)
-            .setDescription(infoMessage)
+            .setDescription(infoMessage);
     }
 
     createSong(queue, song, type) {
