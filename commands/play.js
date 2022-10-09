@@ -13,7 +13,6 @@ const {SlashCommand, CommandOptionType} = require('slash-create');
 
 const Message = require('../app/Message');
 const {QueryType} = require("discord-player");
-const playdl = require("play-dl");
 
 module.exports = class playCommand extends SlashCommand {
     constructor(creator) {
@@ -83,12 +82,6 @@ module.exports = class playCommand extends SlashCommand {
                     filter: 'audioonly',
                     quality: 'highestaudio',
                     highWaterMark: 1 << 25
-                },
-                async onBeforeCreateStream(track, source, _queue) {
-                    return (await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, {
-                        limit: 1,
-                        source: {youtube: "video"}
-                    }).then(x => x[0].url), {discordPlayerCompatibility: true})).stream;
                 }
             });
 
