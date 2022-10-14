@@ -76,7 +76,7 @@ module.exports = class playCommand extends SlashCommand {
                 ytdlOptions: {
                     requestOptions: {
                         headers: {
-                            cookie: ""
+                            cookie: process.env.YOUTUBE_COOKIE
                         }
                     },
                     filter: 'audioonly',
