@@ -59,7 +59,7 @@ module.exports = class playCommand extends SlashCommand {
             .catch((e) => {
                 console.log(e);
             });
-
+        
         if (!searchResult || !searchResult.tracks.length) return ctx.sendFollowUp({
             embeds: [
                 new Message().createError("No results were found!")
