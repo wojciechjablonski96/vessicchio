@@ -17,7 +17,7 @@
     "fs": "^0.0.1-security",
     "moment": "^2.29.4",
     "path": "^0.12.7",
-    "slash-create": "^5.10.0",
+    "slash-create": "^5.11.0",
     "soundcloud-scraper": "^5.0.3",
     "spotify-url-info": "^3.1.10",
     "youtube-sr": "^4.3.4",
