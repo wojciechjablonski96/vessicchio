@@ -19,7 +19,7 @@
     "path": "^0.12.7",
     "slash-create": "^5.11.0",
     "soundcloud-scraper": "^5.0.3",
-    "spotify-url-info": "^3.1.10",
+    "spotify-url-info": "^3.2.3",
     "youtube-sr": "^4.3.4",
     "ytdl-core": "^4.11.2"
   }
