@@ -7,10 +7,10 @@
   "author": "Wojciech Jablonski <info@wojciechjablonski.com>",
   "license": "MIT",
   "dependencies": {
-    "@discord-player/extractor": "^3.0.2",
+    "@discord-player/extractor": "^3.0.3",
     "@discordjs/opus": "^0.9.0",
     "cat-loggr": "^1.2.2",
-    "discord-player": "^5.3.2",
+    "discord-player": "^5.4.0",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
     "ffmpeg-static": "^5.1.0",
