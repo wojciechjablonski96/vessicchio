@@ -76,17 +76,14 @@ module.exports = class playCommand extends SlashCommand {
                 ytdlOptions: {
                     filter: 'audioonly',
                     quality: 'highestaudio',
-                    highWaterMark: 1 << 25
+                    highWaterMark: 1 << 25,
+                    requestOptions: {
+                        headers: {
+                            cookie: process.env?.YOUTUBE_COOKIE
+                        }
+                    }
                 }
             });
-
-        if(process.env.YOUTUBE_COOKIE) {
-            this.queue.options.ytdlOptions.requestOptions = {
-                headers: {
-                    cookie: process.env.YOUTUBE_COOKIE
-                }
-            }
-        }
 
         try {
             if (!queue.connection) await queue.connect(member.voice.channel);
