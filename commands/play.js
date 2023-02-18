@@ -41,7 +41,7 @@ module.exports = class playCommand extends SlashCommand {
 
         await client.distube.play(member.voice.channel, ctx.options.query, {
             member: member,
-            textChannel:  channel
+            textChannel: channel
         });
 
         await ctx.sendFollowUp({
