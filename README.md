@@ -9,7 +9,7 @@ A music bot written using <a href="https://www.npmjs.com/package/discord.js">dis
 <hr>
 <a href="https://github.com/wojciechjablonski96/vessicchio/commits/master"><img src="https://img.shields.io/github/last-commit/wojciechjablonski96/vessicchio?color=44b868&logo=GitHub&logoColor=white&style=flat-square" alt="last commit"></a> 
 <a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/github/package-json/dependency-version/wojciechjablonski96/vessicchio/discord.js?color=44b868&logo=npm&style=flat-square"></a>
-<a href="https://www.npmjs.com/package/discord-player"><img src="https://img.shields.io/github/package-json/dependency-version/wojciechjablonski96/vessicchio/discord-player?color=44b868&logo=npm&style=flat-square"></a>
+<a href="https://www.npmjs.com/package/distube"><img src="https://img.shields.io/github/package-json/dependency-version/wojciechjablonski96/vessicchio/distube?color=44b868&logo=npm&style=flat-square"></a>
 <a href="https://www.npmjs.com/package/slash-create"><img src="https://img.shields.io/github/package-json/dependency-version/wojciechjablonski96/vessicchio/slash-create?color=44b868&logo=npm&style=flat-square"></a>
 <a href="https://www.codefactor.io/repository/github/wojciechjablonski96/vessicchio"><img src="https://www.codefactor.io/repository/github/wojciechjablonski96/vessicchio/badge?s=cf93e39c12b7a91e0c32dc1c5109b82d58da5674" alt="CodeFactor" /></a>
 </div>

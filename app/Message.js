@@ -1,14 +1,3 @@
-/*
- * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
- *
- * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
- * It is considered confidential and proprietary.
- *
- * This document may not be reproduced or transmitted in any form,
- * in whole or in part, without the express written permission of
- * Wojciech Jablonski <info@wojciechjablonski.com>.
- */
-
 const Discord = require('discord.js');
 
 class Message {
@@ -30,7 +19,7 @@ class Message {
 
     createSong(queue, song, type) {
         this.msg
-            .setDescription(song.title)
+            .setDescription(song.name)
             .setTimestamp();
 
         if (type === 1) {
@@ -39,11 +28,11 @@ class Message {
                 .addFields([
                     {
                         name: 'Requested by',
-                        value: song.requestedBy ? song.requestedBy.username.toString() : 'Not available',
+                        value: song?.user.toString(),
                         inline: false
                     },
                     {
-                        name: 'Will be played in', value: queue.connection.channel.name.toString(),
+                        name: 'Will be played in', value: queue.textChannel.name.toString(),
                         inline: false
                     },
                 ]);
@@ -53,25 +42,21 @@ class Message {
                 .setColor(process.env.COLOR_INFO)
                 .addFields([
                     {
-                        name: 'Author', value: song.author ? song.author.toString() : 'Not available',
-                        inline: true
-                    },
-                    {
                         name: 'Requested by',
-                        value: song.requestedBy ? song.requestedBy.username.toString() : 'Not available',
+                        value: song?.user.toString(),
                         inline: false
                     },
                     {
-                        name: 'Views', value: song.views ? song.views.toString() : 'Not available',
+                        name: 'Views', value: song?.views.toString(),
                         inline: true
                     },
                     {
-                        name: 'Duration', value: song.duration ? song.duration.toString() : 'Not available',
+                        name: 'Duration', value: song?.formattedDuration.toString(),
                         inline: true
                     },
                 ]);
         } else if (type === 3) {
-            const progress = queue.createProgressBar();
+           /* const progress = queue.createProgressBar();
             this.msg.setTitle('Seeking song')
                 .setColor(process.env.COLOR_PRIMARY)
                 .addFields([
@@ -79,7 +64,7 @@ class Message {
                         name: '\u200b',
                         value: progress.replace(/ 0:00/g, ' ◉ LIVE')
                     }
-                ]);
+                ]);*/
         }
         return this.msg;
     }

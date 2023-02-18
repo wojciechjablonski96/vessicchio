@@ -13,7 +13,10 @@
 const {Client, GatewayIntentBits} = require('discord.js');
 const dotenv = require("dotenv");
 const {SlashCreator, GatewayServer} = require('slash-create');
-const {Player} = require('discord-player');
+const { DisTube } = require('distube');
+const { SpotifyPlugin } = require('@distube/spotify');
+const { SoundCloudPlugin } = require('@distube/soundcloud');
+const { YtDlpPlugin } = require('@distube/yt-dlp');
 const path = require('path');
 const fs = require('fs');
 
@@ -24,9 +27,9 @@ const CatLoggr = require('cat-loggr');
 
 const client = new Client({
     intents: [
-        GatewayIntentBits.Guilds, 
-        GatewayIntentBits.GuildVoiceStates, 
-        GatewayIntentBits.GuildMembers, 
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildVoiceStates,
+        GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.DirectMessageReactions,
         GatewayIntentBits.GuildBans,
@@ -45,7 +48,25 @@ const client = new Client({
 
 client.logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
 
-client.player = new Player(client);
+client.distube = new DisTube(client, {
+    directLink: true,
+    nsfw:true,
+    searchSongs: 5,
+    searchCooldown: 30,
+    leaveOnEmpty: true,
+    leaveOnFinish: false,
+    leaveOnStop: false,
+    emitNewSongOnly: true,
+    emitAddSongWhenCreatingQueue: false,
+    emitAddListWhenCreatingQueue: false,
+    plugins: [
+        new SpotifyPlugin({
+            emitEventsAfterFetching: true
+        }),
+        new SoundCloudPlugin(),
+        new YtDlpPlugin()
+    ]
+})
 
 const creator = new SlashCreator({
     applicationID: process.env.APPLICATION_ID,
@@ -91,10 +112,12 @@ for (const file of player) {
     client.logger.info(`Loaded player event ${file}`);
     const eventName = file.split(".")[0];
     const event = new (require(`./events/player/${file}`))(client);
-    client.player.on(eventName, (...args) => event.create(...args));
+    client.distube.on(eventName, (...args) => event.create(...args));
     delete require.cache[require.resolve(`./events/player/${file}`)];
 
 }
+
+
 
 client.login(process.env.TOKEN);
 

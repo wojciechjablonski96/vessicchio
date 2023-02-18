@@ -1,14 +1,3 @@
-/*
- * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
- *
- * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
- * It is considered confidential and proprietary.
- *
- * This document may not be reproduced or transmitted in any form,
- * in whole or in part, without the express written permission of
- * Wojciech Jablonski <info@wojciechjablonski.com>.
- */
-
 const {SlashCommand} = require('slash-create');
 
 const Message = require('../app/Message');
@@ -42,23 +31,28 @@ module.exports = class skipCommand extends SlashCommand {
             ], ephemeral: true
         });
 
-        const queue = client.player.getQueue(ctx.guildID);
+        const queue = client.distube.getQueue(ctx.guildID);
 
         if (!queue || !queue.playing) return ctx.sendFollowUp({
             embeds: [
                 new Message().createError("This bot is not playing right now!")
             ], ephemeral: true
         });
-        const currentTrack = queue.current;
-        const success = queue.skip();
 
-        return ctx.sendFollowUp({
-            embeds: [
-                new Message().createInfo(success ? currentTrack + " has been skipped" : "Something went wrong!")
-            ], ephemeral: false
-        });
-
-
+        try {
+            const song = await queue.skip();
+            return ctx.sendFollowUp({
+                embeds: [
+                    new Message().createInfo("Skipped! Now playing \n" + song.name)
+                ], ephemeral: false
+            });
+        } catch (e) {
+            return ctx.sendFollowUp({
+                embeds: [
+                    new Message().createError(e)
+                ], ephemeral: false
+            });
+        }
     }
 }
 
