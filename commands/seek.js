@@ -52,7 +52,7 @@ module.exports = class seekCommand extends SlashCommand {
 
         return ctx.sendFollowUp({
             embeds: [
-                new Message().createSong(queue,queue.song, 3)
+                new Message().createSong(queue, queue.song, 3)
             ], ephemeral: false
         });
 

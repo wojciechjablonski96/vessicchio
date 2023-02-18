@@ -6,6 +6,6 @@ module.exports = class {
     }
 
     async create(queue) {
-            await queue.textChannel.send({embeds: [new Message().createInfo("The queue was ended.")]});
+        await queue.textChannel.send({embeds: [new Message().createInfo("The queue was ended.")]});
     }
 }

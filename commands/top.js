@@ -51,11 +51,11 @@ module.exports = class topCommand extends SlashCommand {
 
         await client.distube.play(member.voice.channel, ctx.options.query, {
             member: member,
-            textChannel:  channel,
+            textChannel: channel,
             position: 1
         })
 
-       await ctx.sendFollowUp({
+        await ctx.sendFollowUp({
             embeds: [
                 new Message().createInfo(`Adding your playlist/track to the top of current queue.`)
             ], ephemeral: true
