@@ -1,18 +1,6 @@
-/*
- * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
- *
- * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
- * It is considered confidential and proprietary.
- *
- * This document may not be reproduced or transmitted in any form,
- * in whole or in part, without the express written permission of
- * Wojciech Jablonski <info@wojciechjablonski.com>.
- */
-
 const {SlashCommand, CommandOptionType} = require('slash-create');
 
 const Message = require('../app/Message');
-const {QueryType} = require("discord-player");
 
 module.exports = class topCommand extends SlashCommand {
     constructor(creator) {
@@ -37,6 +25,7 @@ module.exports = class topCommand extends SlashCommand {
         const guild = client.guilds.cache.get(ctx.guildID);
         const member = guild.members.cache.get(ctx.user.id) ?? await guild.members.fetch(ctx.user.id);
         const bot = guild.members.cache.get(ctx.data.application_id) ?? await guild.members.fetch(ctx.data.application_id);
+        const channel = guild.channels.cache.get(ctx.channelID) ?? await guild.channels.fetch(ctx.channelID)
 
         await ctx.defer();
 
@@ -52,7 +41,7 @@ module.exports = class topCommand extends SlashCommand {
             ], ephemeral: true
         });
 
-        const queue = client.player.getQueue(ctx.guildID);
+        const queue = client.distube.getQueue(ctx.guildID);
 
         if (!queue || !queue.playing) return ctx.sendFollowUp({
             embeds: [
@@ -60,26 +49,15 @@ module.exports = class topCommand extends SlashCommand {
             ], ephemeral: true
         });
 
-        const query = ctx.options.query;
-        const searchResult = await client.player
-            .search(query, {
-                requestedBy: ctx.user,
-                searchEngine: ctx.commandName === "soundcloud" ? QueryType.SOUNDCLOUD_SEARCH : QueryType.AUTO
-            })
-            .catch(() => {
-            });
+        await client.distube.play(member.voice.channel, ctx.options.query, {
+            member: member,
+            textChannel:  channel,
+            position: 1
+        })
 
-        if (!searchResult || !searchResult.tracks.length) return ctx.sendFollowUp({
+       await ctx.sendFollowUp({
             embeds: [
-                new Message().createError("No results were found!")
-            ], ephemeral: true
-        });
-
-        queue.insert(searchResult.tracks[0]);
-
-        await ctx.sendFollowUp({
-            embeds: [
-                new Message().createInfo(`Adding your ${searchResult.playlist ? "playlist" : "track"} to the top of current queue.`)
+                new Message().createInfo(`Adding your playlist/track to the top of current queue.`)
             ], ephemeral: true
         });
     }

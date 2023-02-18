@@ -1,14 +1,3 @@
-/*
- * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
- *
- * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
- * It is considered confidential and proprietary.
- *
- * This document may not be reproduced or transmitted in any form,
- * in whole or in part, without the express written permission of
- * Wojciech Jablonski <info@wojciechjablonski.com>.
- */
-
 const {SlashCommand} = require('slash-create');
 
 const Message = require('../app/Message');
@@ -17,7 +6,7 @@ module.exports = class pauseCommand extends SlashCommand {
     constructor(creator) {
         super(creator, {
             name: 'pause',
-            description: 'Pause your queue',
+            description: 'Pause/resume your queue',
         });
         this.filePath = __filename;
     }
@@ -42,23 +31,28 @@ module.exports = class pauseCommand extends SlashCommand {
             ], ephemeral: true
         });
 
-        const queue = client.player.getQueue(ctx.guildID);
+        const queue = client.distube.getQueue(ctx.guildID);
 
-        if (!queue || !queue.playing) return ctx.sendFollowUp({
+        if (!queue) return ctx.sendFollowUp({
             embeds: [
                 new Message().createError("This bot is not playing right now!")
             ], ephemeral: true
         });
 
-        const paused = queue.setPaused(true);
-
+        if (queue.paused) {
+            await queue.resume()
+            return ctx.sendFollowUp({
+                embeds: [
+                    new Message().createInfo("Resumed")
+                ], ephemeral: false
+            });
+        }
+        await queue.pause()
         return ctx.sendFollowUp({
             embeds: [
-                new Message().createInfo(paused ? "Bot paused!" : "Something went wrong!")
+                new Message().createInfo("Bot paused!")
             ], ephemeral: false
         });
-
-
     }
 }
 

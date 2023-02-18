@@ -15,7 +15,7 @@ module.exports = class {
         this.client = client;
     }
 
-    async create(queue) {
-            queue.metadata.send({ embeds: [new Message().createInfo("The bot was disconnected from your voice channel, the queue was deleted.")]});
+    async create(channel) {
+        channel.send({ embeds: [new Message().createInfo('The channel is empty, stopped music.')]});
     }
 }

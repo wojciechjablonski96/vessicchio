@@ -1,14 +1,3 @@
-/*
- * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
- *
- * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
- * It is considered confidential and proprietary.
- *
- * This document may not be reproduced or transmitted in any form,
- * in whole or in part, without the express written permission of
- * Wojciech Jablonski <info@wojciechjablonski.com>.
- */
-
 const {SlashCommand, CommandOptionType} = require('slash-create');
 
 const Message = require('../app/Message');
@@ -50,7 +39,7 @@ module.exports = class removeCommand extends SlashCommand {
             ], ephemeral: true
         });
 
-        const queue = client.player.getQueue(ctx.guildID);
+        const queue = client.distube.getQueue(ctx.guildID);
 
         if (!queue || !queue.playing) return ctx.sendFollowUp({
             embeds: [
@@ -58,7 +47,7 @@ module.exports = class removeCommand extends SlashCommand {
             ], ephemeral: true
         });
 
-        const trackName = queue.tracks[ctx.options.track - 1].title;
+        const trackName = queue.songs[ctx.options.track - 1].name;
         await queue.remove(ctx.options.track - 1);
 
         return ctx.sendFollowUp({

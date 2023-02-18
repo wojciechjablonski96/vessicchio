@@ -1,18 +1,7 @@
-/*
- * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
- *
- * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
- * It is considered confidential and proprietary.
- *
- * This document may not be reproduced or transmitted in any form,
- * in whole or in part, without the express written permission of
- * Wojciech Jablonski <info@wojciechjablonski.com>.
- */
-
 const {SlashCommand, CommandOptionType} = require('slash-create');
 
 const Message = require('../app/Message');
-const {QueryType} = require("discord-player");
+const {client} = require("../app");
 
 module.exports = class playCommand extends SlashCommand {
     constructor(creator) {
@@ -36,6 +25,7 @@ module.exports = class playCommand extends SlashCommand {
         const guild = client.guilds.cache.get(ctx.guildID);
         const member = guild.members.cache.get(ctx.user.id) ?? await guild.members.fetch(ctx.user.id);
         const bot = guild.members.cache.get(ctx.data.application_id) ?? await guild.members.fetch(ctx.data.application_id);
+        const channel = guild.channels.cache.get(ctx.channelID) ?? await guild.channels.fetch(ctx.channelID)
 
         await ctx.defer();
 
@@ -51,62 +41,16 @@ module.exports = class playCommand extends SlashCommand {
             ], ephemeral: true
         });
 
-        const searchResult = await client.player
-            .search(ctx.options.query, {
-                searchEngine: ctx.commandName === "soundcloud" ? QueryType.SOUNDCLOUD_SEARCH : QueryType.AUTO,
-                requestedBy: ctx.user
-            })
-            .catch((e) => {
-                console.log(e);
-            });
-        
-        if (!searchResult || !searchResult.tracks.length) return ctx.sendFollowUp({
-            embeds: [
-                new Message().createError("No results were found!")
-            ], ephemeral: true
+        await client.distube.play(member.voice.channel, ctx.options.query, {
+            member: member,
+            textChannel:  channel
         });
-
-        const queue = await client.player.createQueue(guild,
-            {
-                metadata: client.channels.cache.get(ctx.channelID),
-                autoSelfDeaf: false,
-                leaveOnEnd: false,
-                leaveOnStop: true,
-                leaveOnEmpty: true,
-                ytdlOptions: {
-                    filter: 'audioonly',
-                    quality: 'highestaudio',
-                    highWaterMark: 1 << 25
-                }
-            });
-
-        if(process.env.YOUTUBE_COOKIE) {
-            this.queue.options.ytdlOptions.requestOptions = {
-                headers: {
-                    cookie: process.env.YOUTUBE_COOKIE
-                }
-            }
-        }
-
-        try {
-            if (!queue.connection) await queue.connect(member.voice.channel);
-        } catch {
-            await client.player.deleteQueue(ctx.guildID);
-            return ctx.sendFollowUp({
-                embeds: [
-                    new Message().createInfo("Could not join your voice channel!")
-                ], ephemeral: true
-            });
-        }
 
         await ctx.sendFollowUp({
             embeds: [
-                new Message().createInfo(`Adding your ${searchResult.playlist ? "playlist" : "track"} to the queue.`)
+                new Message().createInfo(`Adding your track/playlist to the queue.`)
             ], ephemeral: true
         });
-
-        searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
-        if (!queue.playing) await queue.play();
     }
 }
 

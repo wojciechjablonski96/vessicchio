@@ -1,16 +1,4 @@
-/*
- * Copyright (C) 2021 Wojciech Jablonski All rights reserved.
- *
- * This document is the property of Wojciech Jablonski <info@wojciechjablonski.com>.
- * It is considered confidential and proprietary.
- *
- * This document may not be reproduced or transmitted in any form,
- * in whole or in part, without the express written permission of
- * Wojciech Jablonski <info@wojciechjablonski.com>.
- */
-
 const {SlashCommand, CommandOptionType} = require('slash-create');
-const {QueueRepeatMode} = require('discord-player');
 
 const Message = require('../app/Message');
 
@@ -28,19 +16,15 @@ module.exports = class loopCommand extends SlashCommand {
                     choices: [
                         {
                             name: 'Off',
-                            value: QueueRepeatMode.OFF
+                            value: 0
                         },
                         {
                             name: 'Track',
-                            value: QueueRepeatMode.TRACK
+                            value: 1
                         },
                         {
                             name: 'Queue',
-                            value: QueueRepeatMode.QUEUE
-                        },
-                        {
-                            name: 'Autoplay',
-                            value: QueueRepeatMode.AUTOPLAY
+                            value: 2
                         }
                     ]
                 }]
@@ -69,7 +53,7 @@ module.exports = class loopCommand extends SlashCommand {
             ], ephemeral: true
         });
 
-        const queue = client.player.getQueue(ctx.guildID);
+        const queue = client.distube.getQueue(ctx.guildID);
         if (!queue || !queue.playing) return ctx.sendFollowUp({
             embeds: [
                 new Message().createError("This bot is not playing right now!")
@@ -78,7 +62,7 @@ module.exports = class loopCommand extends SlashCommand {
 
         const loopMode = ctx.options.mode;
         const success = queue.setRepeatMode(loopMode);
-        const mode = loopMode === QueueRepeatMode.TRACK ? '🔂' : loopMode === QueueRepeatMode.QUEUE ? '🔁' : '▶';
+        const mode = loopMode === 1 ? '🔂' : loopMode === 2 ? '🔁' : '▶';
 
         return ctx.sendFollowUp({
             embeds: [

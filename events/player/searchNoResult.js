@@ -8,14 +8,14 @@
  * in whole or in part, without the express written permission of
  * Wojciech Jablonski <info@wojciechjablonski.com>.
  */
+const Message = require('../../app/Message');
 
 module.exports = class {
     constructor(client) {
         this.client = client;
     }
 
-    async create(message) {
-
-        //Nothing
+    async create(message,query) {
+        message.channel.send({ embeds: [new Message().createError('No result found for ' + query)]});
     }
 }
