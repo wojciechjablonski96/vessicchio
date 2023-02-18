@@ -1,8 +1,6 @@
 const {SlashCommand, CommandOptionType} = require('slash-create');
 
 const Message = require('../app/Message');
-const {client} = require("../app");
-
 module.exports = class playCommand extends SlashCommand {
     constructor(creator) {
         super(creator, {
