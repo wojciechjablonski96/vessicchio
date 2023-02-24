@@ -59,6 +59,8 @@ client.distube = new DisTube(client, {
     emitNewSongOnly: true,
     emitAddSongWhenCreatingQueue: false,
     emitAddListWhenCreatingQueue: false,
+    youtubeCookie: process.env?.YT_COOKIE,
+    youtubeIdentityToken: process.env?.YT_ID,
     plugins: [
         new SpotifyPlugin({
             emitEventsAfterFetching: true
