@@ -1,6 +1,7 @@
 const {SlashCommand, CommandOptionType} = require('slash-create');
 
 const Message = require('../app/Message');
+const {client} = require("../app");
 module.exports = class playCommand extends SlashCommand {
     constructor(creator) {
         super(creator, {
@@ -38,6 +39,20 @@ module.exports = class playCommand extends SlashCommand {
                 new Message().createError("You are not in the same voice channel!")
             ], ephemeral: true
         });
+
+        try{
+            if(!client.distube.voices.get(ctx.guildID)) {
+                await client.distube.voices.join(member.voice.channel);
+                client.distube.voices.get(ctx.guildID).setSelfDeaf(false);
+                client.distube.voices.get(ctx.guildID).setSelfMute(false);
+            }
+        } catch {
+            await ctx.sendFollowUp({
+                embeds: [
+                    new Message().createInfo(`Could not join your voice channel!`)
+                ], ephemeral: true
+            });
+        }
 
         await client.distube.play(member.voice.channel, ctx.options.query, {
             member: member,
